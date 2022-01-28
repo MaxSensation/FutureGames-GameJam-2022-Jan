@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Styles/Default.uss?fileID=7433441132597879392&amp;guid=edb0e8c7dd989544bb1d58aefaf1d153&amp;type=3#Default" />
+    <ui:VisualElement name="NotificationPanel" style="align-items: flex-start; justify-content: flex-start; flex-grow: 1; flex-direction: column; display: none; height: 100%; width: 100%; opacity: 1; visibility: hidden; overflow: visible; position: absolute;">
+        <ui:VisualElement class="DefaultVisualElement" style="height: 20%; width: 30%; align-items: center; justify-content: flex-start; flex-grow: 0; flex-direction: column; visibility: visible; display: flex; position: relative; overflow: visible; max-width: 550px;">
+            <ui:Label text="Notification Header" display-tooltip-when-elided="true" name="NotificationHeader" class="DefaultLable" style="font-size: 30px;" />
+            <ui:Label text="Notification Text Notification TextNotification Text Notification TextNotification Text Notification TextNotification Text Notification TextNotification Text Notification TextNotification Text Notification " display-tooltip-when-elided="true" name="NotificationText" class="DefaultLable" style="width: 90%; white-space: normal;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

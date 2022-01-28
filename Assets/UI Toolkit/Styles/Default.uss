@@ -1,0 +1,96 @@
+.DefaultButton {
+    background-color: rgb(120, 120, 120);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    font-size: 18px;
+    -unity-font-style: bold;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    width: 60%;
+    height: 20%;
+}
+
+.DefaultButton:hover {
+    height: 22%;
+    width: 62%;
+    background-color: rgb(159, 159, 159);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    font-size: 18px;
+    -unity-font-style: bold;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.DefaultButton:active {
+    height: 22%;
+    width: 62%;
+    background-color: rgb(0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    font-size: 18px;
+    -unity-font-style: bold;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    color: rgb(255, 255, 255);
+}
+
+.DefaultSubHeader {
+    font-size: 20px;
+    -unity-font-style: bold;
+    color: rgba(255, 0, 0, 255);
+}
+
+.DefaultSlider {
+    padding-top: 0;
+    margin-bottom: 18px;
+    color: rgba(0, 0, 0, 255);
+}
+
+.DefaultDropdown {
+    margin-left: 4px;
+    margin-right: 10px;
+    opacity: 1;
+    margin-bottom: 10px;
+    width: 300px;
+    height: 35px;
+}
+
+.DefaultToggle {
+}
+
+.DefaultVisualElement {
+    background-color: rgb(255, 255, 255);
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+.DefaultLable {
+    color: rgba(0, 0, 0, 255);
+}

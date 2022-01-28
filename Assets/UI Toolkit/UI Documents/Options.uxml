@@ -1,0 +1,29 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Styles/Default.uss?fileID=7433441132597879392&amp;guid=edb0e8c7dd989544bb1d58aefaf1d153&amp;type=3#Default" />
+    <ui:VisualElement name="MainPanel" style="align-items: center; justify-content: center; flex-grow: 1; background-color: rgba(0, 0, 0, 0); min-width: auto; min-height: auto; max-width: none;">
+        <ui:VisualElement class="DefaultVisualElement" style="height: 60%; width: 70%; align-items: center; justify-content: center; max-width: none; min-width: 500px; min-height: 400px; max-height: none;">
+            <ui:Label text="Options" display-tooltip-when-elided="true" class="DefaultLable" style="font-size: 32px;" />
+            <ui:VisualElement style="width: 95%; height: 100%; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; flex-direction: row; justify-content: center; align-items: stretch;">
+                <ui:VisualElement>
+                    <ui:VisualElement name="GraphicsPanel" style="width: auto; height: 50%;">
+                        <ui:Label text="Graphics" display-tooltip-when-elided="true" class="DefaultSubHeader DefaultLable" />
+                        <ui:Toggle label="Fullscreen" name="FullscreenToggle" value="true" class="DefaultToggle" style="margin-bottom: 6px;" />
+                        <ui:DropdownField label="Resolution" index="-1" name="ResolutionSetting" class="DefaultDropdown" style="width: auto; height: auto;" />
+                        <ui:DropdownField label="GraphicSettings" index="1" choices="Low, Medium, High" name="GraphicSetting" class="DefaultDropdown" style="width: auto; height: auto;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="ControlsPanel" style="height: 50%; flex-direction: column; align-items: stretch; justify-content: flex-start;">
+                        <ui:Label text="Controls" display-tooltip-when-elided="true" class="DefaultSubHeader DefaultLable" />
+                        <ui:Slider picking-mode="Ignore" label="Sensetivity" value="0.5" high-value="1" low-value="0.1" name="SensitivitySlider" class="DefaultSlider" style="margin-right: 50px;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="AudioPanel" style="width: 48%; height: 100%;">
+                    <ui:Label text="Audio" display-tooltip-when-elided="true" class="DefaultSubHeader DefaultLable" />
+                    <ui:Slider picking-mode="Ignore" label="MasterVolume" value="0.5" high-value="1" name="MasterSlider" inverted="false" low-value="0.001" class="DefaultSlider" />
+                    <ui:Slider picking-mode="Ignore" label="MusicVolume" value="0.5" high-value="1" name="MusicSlider" low-value="0.001" class="DefaultSlider" />
+                    <ui:Slider picking-mode="Ignore" label="SoundFXVolume" value="0.5" high-value="1" name="SoundFXSlider" low-value="0.001" class="DefaultSlider" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:Button text="Go Back" display-tooltip-when-elided="true" name="GoBack" value="0.5" class="DefaultButton" style="height: 46px; width: 193px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
