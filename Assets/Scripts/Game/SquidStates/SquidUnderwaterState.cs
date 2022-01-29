@@ -1,5 +1,4 @@
 ﻿using MaxHelpers;
-using UnityEngine;
 
 namespace SquidStates
 {
@@ -7,8 +6,7 @@ namespace SquidStates
     {
         private readonly SquidController _squidController;
         private readonly SquidController.InWaterParams _inWaterParams;
-        private Quaternion _lastRot;
-
+        
         public SquidUnderwaterState(SquidController squidController, SquidController.InWaterParams inInWaterParams)
         {
             _squidController = squidController;
@@ -20,7 +18,7 @@ namespace SquidStates
         public void Tick()
         {
             _squidController.HandleMovement(_inWaterParams.speed, _inWaterParams.acceleration, _inWaterParams.deacceleration);
-            _lastRot = _squidController.RotateTowards(_inWaterParams.rotationSpeed, _lastRot);
+            _squidController.RotateTowards(_inWaterParams.rotationSpeed);
         }
 
         public void OnExit() => _squidController.Rb.gravityScale = 4f;

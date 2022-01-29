@@ -1,5 +1,4 @@
 ﻿using MaxHelpers;
-using UnityEngine;
 
 namespace SquidStates
 {
@@ -10,7 +9,6 @@ namespace SquidStates
         private readonly float _speed, _acceleration;
         private readonly float _rotationSpeed;
         private readonly float _airControl;
-        private Quaternion _lastRot;
 
         public SquidAirState(SquidController squidController, SquidController.InAirParams inAirParams)
         {
@@ -21,7 +19,7 @@ namespace SquidStates
         public void Tick()
         {
             _squidController.HandleMovement(_inAirParams.speed, _inAirParams.acceleration, _inAirParams.deacceleration, _inAirParams.control, false);
-            _lastRot = _squidController.RotateTowards(_inAirParams.rotationSpeed, _lastRot, _inAirParams.rotateVelocity);
+            _squidController.RotateTowards(_inAirParams.rotationSpeed, _inAirParams.rotateVelocity);
         }
     }
 }

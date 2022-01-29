@@ -10,8 +10,8 @@ public class SquidController : MonoBehaviour
     [SerializeField] private InAirParams inAirParams;
     [SerializeField] private InWaterParams inWaterParams;
     
-    private readonly StateMachine _stateMachine = new ();
     public Rigidbody2D Rb { get; private set; }
+    private readonly StateMachine _stateMachine = new ();
     
     private void Start()
     {
@@ -45,18 +45,13 @@ public class SquidController : MonoBehaviour
         _stateMachine.Tick();
     }
     
-    public Quaternion RotateTowards(float speed, Quaternion fallback, bool velocity = false)
+    public void RotateTowards(float speed, bool velocity = false)
     {
         var dir = velocity ? Rb.velocity : GameManager.Instance.Inputs.Player.Move.ReadValue<Vector2>();
-        if (dir.magnitude <= 0f) transform.rotation = fallback;
-        else
-        {
-            var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            var newRot = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(angle -90f, Vector3.forward), speed * Time.deltaTime);
-            transform.rotation = newRot;
-            return newRot;   
-        }
-        return fallback;
+        if (!(dir.magnitude > 0f)) return;
+        var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        var newRot = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(angle -90f, Vector3.forward), speed * Time.deltaTime);
+        transform.rotation = newRot;
     }
     public void HandleMovement(float speed, float acceleration, float deacceleration, float control = 1f, bool yControl = true)
     {
