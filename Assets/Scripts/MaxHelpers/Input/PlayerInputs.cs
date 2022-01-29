@@ -89,6 +89,15 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""385c44ec-d66c-4335-a0d8-f4d367c946ec"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -353,6 +362,17 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""OpenGameMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""710402fd-3b49-4c30-85c6-20c8fb4d7077"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -967,6 +987,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         m_Player_RotateRight = m_Player.FindAction("RotateRight", throwIfNotFound: true);
         m_Player_RotateLeft = m_Player.FindAction("RotateLeft", throwIfNotFound: true);
         m_Player_OpenGameMenu = m_Player.FindAction("OpenGameMenu", throwIfNotFound: true);
+        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1046,6 +1067,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_RotateRight;
     private readonly InputAction m_Player_RotateLeft;
     private readonly InputAction m_Player_OpenGameMenu;
+    private readonly InputAction m_Player_Jump;
     public struct PlayerActions
     {
         private @PlayerInputs m_Wrapper;
@@ -1057,6 +1079,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         public InputAction @RotateRight => m_Wrapper.m_Player_RotateRight;
         public InputAction @RotateLeft => m_Wrapper.m_Player_RotateLeft;
         public InputAction @OpenGameMenu => m_Wrapper.m_Player_OpenGameMenu;
+        public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1087,6 +1110,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @OpenGameMenu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenGameMenu;
                 @OpenGameMenu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenGameMenu;
                 @OpenGameMenu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenGameMenu;
+                @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1112,6 +1138,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @OpenGameMenu.started += instance.OnOpenGameMenu;
                 @OpenGameMenu.performed += instance.OnOpenGameMenu;
                 @OpenGameMenu.canceled += instance.OnOpenGameMenu;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
             }
         }
     }
@@ -1283,6 +1312,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         void OnRotateRight(InputAction.CallbackContext context);
         void OnRotateLeft(InputAction.CallbackContext context);
         void OnOpenGameMenu(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

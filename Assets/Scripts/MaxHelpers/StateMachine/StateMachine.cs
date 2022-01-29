@@ -21,6 +21,13 @@ namespace MaxHelpers
             if (transition != null) SetState(transition.To);
             _currentState?.Tick();
         }
+        
+        public void FixedTick()
+        {
+            var transition = GetTransition();
+            if (transition != null) SetState(transition.To);
+            _currentState?.FixedTick();
+        }
 
         public void SetState(IState state)
         {

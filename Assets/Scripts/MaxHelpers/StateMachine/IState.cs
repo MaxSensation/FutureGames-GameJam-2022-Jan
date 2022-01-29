@@ -7,5 +7,6 @@
         void OnEnter() { }
 
         void OnExit() { }
+        void FixedTick() { }
     }
 }
