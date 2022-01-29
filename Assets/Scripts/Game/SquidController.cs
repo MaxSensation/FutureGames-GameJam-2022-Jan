@@ -9,7 +9,6 @@ public class SquidController : MonoBehaviour
     [SerializeField] private float squirtStrength = 100f;
     [SerializeField] private InAirParams inAirParams;
     [SerializeField] private InWaterParams inWaterParams;
-    
     public Rigidbody2D Rb { get; private set; }
     private readonly StateMachine _stateMachine = new ();
     
@@ -24,7 +23,7 @@ public class SquidController : MonoBehaviour
         _stateMachine.AddTransition(squirt, air, () => !_isGrounded && !_isUnderwater);
         _stateMachine.AddTransition(squirt, underwater, () => !_isGrounded && _isUnderwater);
         _stateMachine.AddTransition(squirt, underwater, () => _isGrounded && !_isUnderwater);
-        _stateMachine.AddTransition(ground, air, () => !_isGrounded);
+        _stateMachine.AddTransition(ground, air, () => !_isGrounded && !_isUnderwater);
         _stateMachine.AddTransition(air, ground, () => _isGrounded && !_isUnderwater);
         _stateMachine.AddTransition(air, underwater, () => _isUnderwater);
         _stateMachine.AddTransition(underwater, air, () => !_isUnderwater);
