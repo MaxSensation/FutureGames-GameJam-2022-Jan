@@ -49,18 +49,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 0
-  squirtStrength: 20
+  squirtStrength: 25
+  leavingWaterBoost: 20
   inAirParams:
     speed: 10
     acceleration: 1
-    deacceleration: 1
     control: 0.1
     rotationSpeed: 10
     rotateVelocity: 1
   inWaterParams:
     speed: 15
     acceleration: 2
-    deacceleration: 1
     rotationSpeed: 15
   groundMask:
     serializedVersion: 2

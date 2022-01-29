@@ -7,6 +7,7 @@ public class SquidController : MonoBehaviour
 {
     [SerializeField] private bool debugMode;
     [SerializeField] private float squirtStrength = 100f;
+    [SerializeField] private float leavingWaterBoost = 100f;
     [SerializeField] private InAirParams inAirParams;
     [SerializeField] private InWaterParams inWaterParams;
     public Rigidbody2D Rb { get; private set; }
@@ -17,6 +18,7 @@ public class SquidController : MonoBehaviour
         Rb = GetComponent<Rigidbody2D>();
         var underwater = new SquidUnderwaterState(this, inWaterParams);
         var air = new SquidAirState(this, inAirParams);
+        var leavingWater = new SquidLeavingWaterState(this, leavingWaterBoost);
         var squirt = new SquidSquirtState(this, squirtStrength);
         var ground = new SquidGroundState(this);
         _stateMachine.AddAnyTransition(squirt, CanWaterSquirt);
@@ -25,8 +27,9 @@ public class SquidController : MonoBehaviour
         _stateMachine.AddTransition(squirt, underwater, () => _isGrounded && !_isUnderwater);
         _stateMachine.AddTransition(ground, air, () => !_isGrounded && !_isUnderwater);
         _stateMachine.AddTransition(air, ground, () => _isGrounded && !_isUnderwater);
+        _stateMachine.AddTransition(underwater, leavingWater, () => !_isUnderwater && !_isGrounded);
+        _stateMachine.AddTransition(leavingWater, air, () => true);
         _stateMachine.AddTransition(air, underwater, () => _isUnderwater);
-        _stateMachine.AddTransition(underwater, air, () => !_isUnderwater);
         _stateMachine.SetState(underwater);
         Rb.gravityScale = 4f;
         if (debugMode) GameManager.Instance.Inputs.Player.Enable();
