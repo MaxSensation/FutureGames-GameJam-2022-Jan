@@ -18,7 +18,7 @@ public class SquidController : MonoBehaviour
         Rb = GetComponent<Rigidbody2D>();
         var underwater = new SquidUnderwaterState(this, inWaterParams);
         var air = new SquidAirState(this, inAirParams);
-        var leavingWater = new SquidLeavingWaterState(this, leavingWaterParams);
+        var leavingWater = new SquidLeavingWaterState(this, leavingWaterParams, inWaterParams);
         var squirt = new SquidSquirtState(this, squirtStrength);
         var ground = new SquidGroundState(this);
         _stateMachine.AddAnyTransition(squirt, CanWaterSquirt);

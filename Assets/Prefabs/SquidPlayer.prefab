@@ -57,8 +57,8 @@ MonoBehaviour:
     rotationSpeed: 10
     rotateVelocity: 1
   inWaterParams:
-    speed: 15
-    acceleration: 0.1
+    speed: 30
+    acceleration: 0.001
     rotationSpeed: 15
   leavingWaterParams:
     optimalAngle: 45

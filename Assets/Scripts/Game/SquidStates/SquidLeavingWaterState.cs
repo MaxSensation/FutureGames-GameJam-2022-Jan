@@ -1,5 +1,4 @@
-﻿using System;
-using MaxHelpers;
+﻿using MaxHelpers;
 using UnityEngine;
 
 namespace SquidStates
@@ -8,10 +7,12 @@ namespace SquidStates
     {
         private readonly SquidController _squidController;
         private readonly SquidController.LeavingWaterParams _leavingWaterParams;
-        public SquidLeavingWaterState(SquidController squidController, SquidController.LeavingWaterParams leavingWaterParams)
+        private readonly SquidController.InWaterParams _inWaterParams;
+        public SquidLeavingWaterState(SquidController squidController, SquidController.LeavingWaterParams leavingWaterParams, SquidController.InWaterParams inWaterParams)
         {
             _squidController = squidController;
             _leavingWaterParams = leavingWaterParams;
+            _inWaterParams = inWaterParams;
         }
 
         public void OnEnter()
@@ -24,13 +25,14 @@ namespace SquidStates
             var rightBoost = Scale( _leavingWaterParams.minimumAngleFromTop, 1f, _leavingWaterParams.minimumBoost, _leavingWaterParams.force, rightDot);
             var leftBoost = Scale( _leavingWaterParams.minimumAngleFromTop, 1f, _leavingWaterParams.minimumBoost, _leavingWaterParams.force, leftDot);
             //Debug.Log($"RightBoost: {rightBoost}, LeftBoost: {leftBoost}");
-            var newVelocity = Vector2.zero;
+            Vector2 newVelocity;
+            var velocityMulti = _squidController.Rb.velocity.magnitude / _inWaterParams.speed;
             if (_squidController.Rb.velocity.x > 0f) 
-                newVelocity = (transformUp + new Vector3(_leavingWaterParams.horizontalBoost, 0, 0)).normalized * (rightBoost * _squidController.Rb.velocity.magnitude / _leavingWaterParams.maxVelocityForce);
+                newVelocity = (transformUp + new Vector3(_leavingWaterParams.horizontalBoost * rightDot, 0, 0)).normalized * rightBoost * velocityMulti;
             else if(_squidController.Rb.velocity.x < 0f)
-                newVelocity = (transformUp + new Vector3(-_leavingWaterParams.horizontalBoost, 0, 0)).normalized * (leftBoost * _squidController.Rb.velocity.magnitude / _leavingWaterParams.maxVelocityForce);
+                newVelocity = (transformUp + new Vector3(-_leavingWaterParams.horizontalBoost  * leftDot, 0, 0)).normalized * leftBoost * velocityMulti;
             else
-                newVelocity = transformUp * _leavingWaterParams.fullyVerticalBoost * (_squidController.Rb.velocity.magnitude / _leavingWaterParams.maxVelocityForce);
+                newVelocity = transformUp * _leavingWaterParams.fullyVerticalBoost * velocityMulti;
             _squidController.Rb.velocity = newVelocity;
         }
         
