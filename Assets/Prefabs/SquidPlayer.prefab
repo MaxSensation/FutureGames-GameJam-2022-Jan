@@ -51,7 +51,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 1
-  squirtStrength: 20
+  inWaterSquirtStrength: 40
+  otherStatesWaterStrength: 20
   inAirParams:
     speed: 10
     acceleration: 1
@@ -64,12 +65,15 @@ MonoBehaviour:
     rotationSpeed: 15
   leavingWaterParams:
     optimalAngle: 45
-    force: 50
+    force: 60
     maxVelocityForce: 15
     horizontalBoost: 0.8
     fullyVerticalBoost: 10
     minimumAngleFromTop: 0.84
     minimumBoost: 15
+  waterRegenAmount: 0.8
+  waterDegenAmount: 0.2
+  squirtWaterUseAmount: 0.25
   groundMask:
     serializedVersion: 2
     m_Bits: 256
@@ -204,7 +208,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5301837958098552012
 Transform:
   m_ObjectHideFlags: 0
@@ -288,7 +292,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5301837958257741841
 Transform:
   m_ObjectHideFlags: 0

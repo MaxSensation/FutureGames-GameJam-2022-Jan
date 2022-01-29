@@ -4,6 +4,7 @@ namespace MaxHelpers
 {
     public class GameManager : StaticInstance<GameManager>
     {
+        public Action<float> OnWaterLevelChanged;
         public PlayerInputs Inputs { get; private set; }
         protected override void Awake()
         {

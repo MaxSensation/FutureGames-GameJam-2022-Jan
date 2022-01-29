@@ -226,8 +226,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 607577004387412966, guid: bc452a37bc466ad4bb2253607ecd6b70, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 607577004387412967, guid: bc452a37bc466ad4bb2253607ecd6b70, type: 3}
+      propertyPath: sourceAsset
+      value: 
+      objectReference: {fileID: 9197481963319205126, guid: 35998b62c92da3c409771c0c82c99b74, type: 3}
     - target: {fileID: 607577004983206117, guid: bc452a37bc466ad4bb2253607ecd6b70, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -472,6 +476,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5301837957049216649, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
+      propertyPath: squirtStrength
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301837957049216649, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
+      propertyPath: waterUseAmount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5301837957049216654, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
       propertyPath: m_Name
       value: SquidPlayer
@@ -547,11 +559,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8952769388299888534, guid: 3e1db99f5f28e2d4187af87e55a26325, type: 3}
       propertyPath: m_LocalScale.x
-      value: 27.359219
+      value: 8.109273
       objectReference: {fileID: 0}
     - target: {fileID: 8952769388299888534, guid: 3e1db99f5f28e2d4187af87e55a26325, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.03
+      value: 5.4044
       objectReference: {fileID: 0}
     - target: {fileID: 8952769388299888534, guid: 3e1db99f5f28e2d4187af87e55a26325, type: 3}
       propertyPath: m_LocalPosition.y

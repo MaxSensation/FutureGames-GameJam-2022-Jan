@@ -1,9 +1,11 @@
-﻿using MaxHelpers;
+﻿using System;
+using MaxHelpers;
 
 namespace SquidStates
 {
     public class SquidSquirtState : IState
     {
+        public Action OnEnteredState;
         private readonly SquidController _squidController;
         private readonly float _force;
 
@@ -13,6 +15,10 @@ namespace SquidStates
             _force = force;
         }
 
-        public void OnEnter() => _squidController.Rb.velocity = _squidController.transform.up * _force;
+        public void OnEnter()
+        {
+            OnEnteredState?.Invoke();
+            _squidController.Squirt();
+        }
     }
 }
