@@ -71,7 +71,7 @@ public class SquidController : MonoBehaviour
     {
         if (_isUnderwater) return;
         WaterLevel -= squirtWaterUseAmount;
-        GameManager.Instance.OnWaterLevelChanged.Invoke(WaterLevel);
+        GameManager.Instance.OnWaterLevelChanged?.Invoke(WaterLevel);
     }
     
     private void UpdateWaterLevel()
@@ -85,7 +85,7 @@ public class SquidController : MonoBehaviour
             WaterLevel -= waterDegenAmount * Time.deltaTime;
             if (WaterLevel < 0f) WaterLevel = 0f;
         }
-        GameManager.Instance.OnWaterLevelChanged.Invoke(WaterLevel);
+        GameManager.Instance.OnWaterLevelChanged?.Invoke(WaterLevel);
     }
     #endregion
 

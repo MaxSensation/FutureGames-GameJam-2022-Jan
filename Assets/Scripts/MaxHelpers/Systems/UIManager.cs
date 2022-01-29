@@ -34,7 +34,7 @@ namespace MaxHelpers {
             _stateMachine.AddTransition(_optionsState, inGameMenuState, () => IsExitPressedAndPrevState(inGameMenuState));
             _stateMachine.AddTransition(_optionsState, mainMenuState, () => IsExitPressedAndPrevState(mainMenuState));
             // Set start state
-            _stateMachine.SetState(_inGameState);
+            _stateMachine.SetState(mainMenuState);
             GameManager.Instance.OnWaterLevelChanged += UpdateWaterLevel;
         }
         private void UpdateWaterLevel(float newValue) => CurrentWaterLevel = newValue;
