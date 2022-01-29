@@ -17,7 +17,7 @@ namespace SquidStates
 
         public void Tick()
         {
-            _squidController.HandleMovement(_inWaterParams.speed, _inWaterParams.acceleration, _inWaterParams.deacceleration);
+            _squidController.HandleMovement(_inWaterParams.speed, _inWaterParams.acceleration);
             _squidController.RotateTowards(_inWaterParams.rotationSpeed);
         }
 

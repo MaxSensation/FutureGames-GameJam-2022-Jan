@@ -53,7 +53,7 @@ public class SquidController : MonoBehaviour
         var newRot = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(angle -90f, Vector3.forward), speed * Time.deltaTime);
         transform.rotation = newRot;
     }
-    public void HandleMovement(float speed, float acceleration, float deacceleration, float control = 1f, bool yControl = true)
+    public void HandleMovement(float speed, float acceleration, float control = 1f, bool yControl = true)
     {
         var inputs = GameManager.Instance.Inputs.Player.Move.ReadValue<Vector2>();
         inputs = Vector2.MoveTowards(inputs, inputs.normalized, control * acceleration * Time.deltaTime);
@@ -104,7 +104,6 @@ public class SquidController : MonoBehaviour
     {
         public  float speed;
         public  float acceleration;
-        public  float deacceleration;
         public  float control;
         public  float rotationSpeed;
         public bool rotateVelocity;
@@ -115,7 +114,6 @@ public class SquidController : MonoBehaviour
     {
         public float speed;
         public  float acceleration;
-        public  float deacceleration;
         public  float rotationSpeed;
     }
 }

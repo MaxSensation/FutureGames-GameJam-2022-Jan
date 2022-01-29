@@ -18,7 +18,7 @@ namespace SquidStates
 
         public void Tick()
         {
-            _squidController.HandleMovement(_inAirParams.speed, _inAirParams.acceleration, _inAirParams.deacceleration, _inAirParams.control, false);
+            _squidController.HandleMovement(_inAirParams.speed, _inAirParams.acceleration, _inAirParams.control, false);
             _squidController.RotateTowards(_inAirParams.rotationSpeed, _inAirParams.rotateVelocity);
         }
     }
