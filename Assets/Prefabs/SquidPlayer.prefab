@@ -50,24 +50,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugMode: 0
   squirtStrength: 25
-  leavingWaterBoost: 20
   inAirParams:
     speed: 10
     acceleration: 1
-    control: 0.1
+    control: 0.5
     rotationSpeed: 10
     rotateVelocity: 1
   inWaterParams:
     speed: 15
     acceleration: 2
     rotationSpeed: 15
+  leavingWaterParams:
+    optimalAngle: 45
+    force: 5
+    maxVelocityForce: 2
+    minimumAngleFromTop: 0.8
+    minimumBoost: 0.1
   groundMask:
     serializedVersion: 2
     m_Bits: 256
   waterMask:
     serializedVersion: 2
     m_Bits: 64
-  groundCheckRadius: 0.26
+  groundCheckRadius: 0.15
   groundOffsetDistance: 0.5
   waterCheckRadius: 0.2
 --- !u!50 &5301837957049216651

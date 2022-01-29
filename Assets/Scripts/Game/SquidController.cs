@@ -7,9 +7,9 @@ public class SquidController : MonoBehaviour
 {
     [SerializeField] private bool debugMode;
     [SerializeField] private float squirtStrength = 100f;
-    [SerializeField] private float leavingWaterBoost = 100f;
     [SerializeField] private InAirParams inAirParams;
     [SerializeField] private InWaterParams inWaterParams;
+    [SerializeField] private LeavingWaterParams leavingWaterParams;
     public Rigidbody2D Rb { get; private set; }
     private readonly StateMachine _stateMachine = new ();
     
@@ -18,7 +18,7 @@ public class SquidController : MonoBehaviour
         Rb = GetComponent<Rigidbody2D>();
         var underwater = new SquidUnderwaterState(this, inWaterParams);
         var air = new SquidAirState(this, inAirParams);
-        var leavingWater = new SquidLeavingWaterState(this, leavingWaterBoost);
+        var leavingWater = new SquidLeavingWaterState(this, leavingWaterParams);
         var squirt = new SquidSquirtState(this, squirtStrength);
         var ground = new SquidGroundState(this);
         _stateMachine.AddAnyTransition(squirt, CanWaterSquirt);
@@ -117,5 +117,15 @@ public class SquidController : MonoBehaviour
         public float speed;
         public  float acceleration;
         public  float rotationSpeed;
+    }
+    
+    [Serializable]
+    public struct LeavingWaterParams
+    {
+        public float optimalAngle;
+        public float force;
+        public float maxVelocityForce;
+        public float minimumAngleFromTop;
+        public float minimumBoost;
     }
 }

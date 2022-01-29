@@ -7,10 +7,10 @@ namespace SquidStates
         private readonly SquidController _squidController;
         private readonly float _force;
 
-        public SquidSquirtState(SquidController squidController, float jumpHeight)
+        public SquidSquirtState(SquidController squidController, float force)
         {
             _squidController = squidController;
-            _force = jumpHeight;
+            _force = force;
         }
 
         public void OnEnter() => _squidController.Rb.velocity = _squidController.transform.up * _force;

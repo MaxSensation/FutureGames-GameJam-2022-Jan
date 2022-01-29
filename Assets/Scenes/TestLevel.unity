@@ -477,12 +477,24 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5301837957049216649, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
-      propertyPath: groundCheckRadius
-      value: 0.15
+      propertyPath: leavingWaterBoost
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 5301837957049216649, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
-      propertyPath: groundOffsetDistance
-      value: 0.5
+      propertyPath: optimalAngleBoost
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301837957049216649, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
+      propertyPath: leavingWaterParams.minimumForce
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301837957049216649, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
+      propertyPath: leavingWaterParams.minimumVelocityBoost
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301837957049216649, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
+      propertyPath: leavingWaterParams.minimumVelocityForce
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 5301837957049216654, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
       propertyPath: m_Name
