@@ -50,7 +50,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugMode: 1
   inWaterSquirtStrength: 40
-  otherStatesWaterStrength: 20
+  otherStatesWaterStrength: 30
+  maxVelocity: 60
   inAirParams:
     speed: 10
     acceleration: 1
@@ -64,8 +65,8 @@ MonoBehaviour:
   leavingWaterParams:
     optimalAngle: 45
     force: 60
-    maxVelocityForce: 15
-    horizontalBoost: 0.8
+    maxVelocityForce: 30
+    horizontalBoost: 0.5
     fullyVerticalBoost: 20
     minimumAngleFromTop: 0.84
     minimumBoost: 20

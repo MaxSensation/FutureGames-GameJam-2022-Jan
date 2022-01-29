@@ -8,6 +8,7 @@ public class SquidController : MonoBehaviour
     [SerializeField] private bool debugMode;
     [SerializeField] private float inWaterSquirtStrength;
     [SerializeField] private float otherStatesWaterStrength;
+    [SerializeField] private float maxVelocity;
     [SerializeField] private InAirParams inAirParams;
     [SerializeField] private InWaterParams inWaterParams;
     [SerializeField] private LeavingWaterParams leavingWaterParams;
@@ -100,6 +101,13 @@ public class SquidController : MonoBehaviour
         CheckUnderWater();
         UpdateWaterLevel();
         _stateMachine.Tick();
+        LimitVelocity();
+    }
+
+    private void LimitVelocity()
+    {
+        if (!(Rb.velocity.magnitude >= maxVelocity)) return;
+        Rb.velocity = Rb.velocity.normalized * maxVelocity;
     }
 
     public void RotateTowards(float speed, bool velocity = false)
