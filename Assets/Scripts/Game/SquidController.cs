@@ -1,18 +1,17 @@
 using System;
 using System.Collections;
-using System.Threading;
-using System.Threading.Tasks;
 using MaxHelpers;
 using SquidStates;
-using UnityEditor;
 using UnityEngine;
 
 public class SquidController : MonoBehaviour, IDamageable
 {
     [SerializeField] private bool debugMode;
     [SerializeField] private GameObject waterSplashPrefab;
+    [SerializeField] private Animator waterDash;
+    [SerializeField] private float waterTimer;
     [SerializeField] private GameObject incPrefab;
-    [SerializeField] private int incTimer;
+    [SerializeField] private float incTimer;
     [SerializeField] private float inWaterSquirtStrength;
     [SerializeField] private float otherStatesWaterStrength;
     [SerializeField] private float maxVelocity;
@@ -31,6 +30,9 @@ public class SquidController : MonoBehaviour, IDamageable
     private int _currentInks = 3;
     private Coroutine _inkCoroutineTimer;
     private bool _inkTimerRunning;
+    private Coroutine _waterCoroutineTimer;
+    private bool _waterTimerRunning;
+    private static readonly int Dash = Animator.StringToHash("Dash");
 
     private void Start()
     {
@@ -81,6 +83,12 @@ public class SquidController : MonoBehaviour, IDamageable
         _inkTimerRunning = true;
         yield return Helper.GetWait(incTimer);
         _inkTimerRunning = false;
+    }
+    private IEnumerator WaterTimer()
+    {
+        _waterTimerRunning = true;
+        yield return Helper.GetWait(waterTimer);
+        _waterTimerRunning = false;
     }
 
 
@@ -133,6 +141,7 @@ public class SquidController : MonoBehaviour, IDamageable
     [SerializeField] private float waterDegenAmount;
     [SerializeField] private float squirtWaterUseAmount;
     private float WaterLevel { get; set; }
+    public Animator WaterDashAnimation => waterDash;
 
     private bool _waterRegenActive;
     private bool _waterDegenActive;
@@ -184,11 +193,14 @@ public class SquidController : MonoBehaviour, IDamageable
     }
     public void Squirt()
     {
+        if (_waterTimerRunning) return;
         if (_isUnderwater)
         {
             Rb.velocity = transform.up * inWaterSquirtStrength;   
         }else
             Rb.velocity = transform.up * otherStatesWaterStrength;
+        waterDash.SetTrigger(Dash);
+        StartCoroutine(WaterTimer());
     }
     #endregion
 

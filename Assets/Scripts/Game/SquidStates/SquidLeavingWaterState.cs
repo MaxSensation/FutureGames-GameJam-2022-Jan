@@ -8,6 +8,8 @@ namespace SquidStates
         private readonly SquidController _squidController;
         private readonly SquidController.LeavingWaterParams _leavingWaterParams;
         private readonly SquidController.InWaterParams _inWaterParams;
+        private static readonly int Dash = Animator.StringToHash("Dash");
+
         public SquidLeavingWaterState(SquidController squidController, SquidController.LeavingWaterParams leavingWaterParams, SquidController.InWaterParams inWaterParams)
         {
             _squidController = squidController;
@@ -25,10 +27,13 @@ namespace SquidStates
             var leftBoost = Scale( _leavingWaterParams.minimumAngleFromTop, 1f, _leavingWaterParams.minimumBoost, _leavingWaterParams.force, leftDot);
             Vector2 newVelocity;
             var velocityMulti = _squidController.Rb.velocity.magnitude / _inWaterParams.speed;
-            if (_squidController.Rb.velocity.x > 0f) 
+            if (_squidController.Rb.velocity.x > 0f) {
                 newVelocity = (transformUp + new Vector3(_leavingWaterParams.horizontalBoost * rightDot, 0, 0)).normalized * rightBoost * velocityMulti;
-            else if(_squidController.Rb.velocity.x < 0f)
+                _squidController.WaterDashAnimation.SetTrigger(Dash);
+            }
+            else if(_squidController.Rb.velocity.x < 0f){
                 newVelocity = (transformUp + new Vector3(-_leavingWaterParams.horizontalBoost  * leftDot, 0, 0)).normalized * leftBoost * velocityMulti;
+            }
             else
                 newVelocity = transformUp * _leavingWaterParams.fullyVerticalBoost * velocityMulti;
             //_squidController.Rb.velocity = newVelocity.normalized * Scale(_leavingWaterParams.minimumBoost, newVelocity.magnitude, _leavingWaterParams.minimumBoost, _leavingWaterParams.maxVelocityForce, newVelocity.magnitude);
