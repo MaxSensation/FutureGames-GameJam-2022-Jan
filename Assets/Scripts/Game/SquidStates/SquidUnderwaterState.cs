@@ -21,6 +21,6 @@ namespace SquidStates
             _squidController.RotateTowards(_inWaterParams.rotationSpeed);
         }
 
-        public void OnExit() => _squidController.Rb.gravityScale = 4f;
+        public void OnExit() => _squidController.Rb.gravityScale = 6f;
     }
 }

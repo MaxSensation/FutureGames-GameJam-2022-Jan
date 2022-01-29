@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e2cf55acff19194aafe8b687e96183f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugMode: 0
+  debugMode: 1
   squirtStrength: 25
   inAirParams:
     speed: 10
@@ -58,11 +58,11 @@ MonoBehaviour:
     rotateVelocity: 1
   inWaterParams:
     speed: 15
-    acceleration: 1
+    acceleration: 0.1
     rotationSpeed: 15
   leavingWaterParams:
     optimalAngle: 45
-    force: 30
+    force: 45
     maxVelocityForce: 15
     minimumAngleFromTop: 0.84
     minimumBoost: 8

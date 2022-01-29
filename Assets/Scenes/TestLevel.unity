@@ -472,50 +472,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5301837957049216649, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
-      propertyPath: debugMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5301837957049216649, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
-      propertyPath: leavingWaterBoost
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 5301837957049216649, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
-      propertyPath: optimalAngleBoost
-      value: 45
-      objectReference: {fileID: 0}
-    - target: {fileID: 5301837957049216649, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
-      propertyPath: leavingWaterParams.force
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 5301837957049216649, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
-      propertyPath: inWaterParams.acceleration
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5301837957049216649, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
-      propertyPath: leavingWaterParams.minimumBoost
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 5301837957049216649, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
-      propertyPath: leavingWaterParams.minimumForce
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5301837957049216649, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
-      propertyPath: leavingWaterParams.maxVelocityForce
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 5301837957049216649, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
-      propertyPath: leavingWaterParams.minimumAngleFromTop
-      value: 0.84
-      objectReference: {fileID: 0}
-    - target: {fileID: 5301837957049216649, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
-      propertyPath: leavingWaterParams.minimumVelocityBoost
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5301837957049216649, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
-      propertyPath: leavingWaterParams.minimumVelocityForce
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 5301837957049216654, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
       propertyPath: m_Name
       value: SquidPlayer
