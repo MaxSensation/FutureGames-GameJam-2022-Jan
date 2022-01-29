@@ -11,12 +11,14 @@ public class SquidController : MonoBehaviour
     [SerializeField] private InWaterParams inWaterParams;
     [SerializeField] private LeavingWaterParams leavingWaterParams;
     public Rigidbody2D Rb { get; private set; }
+    public Animator Animator { get; private set; }
     private readonly StateMachine _stateMachine = new ();
-    
+
     private void Start()
     {
         Rb = GetComponent<Rigidbody2D>();
-        var underwater = new SquidUnderwaterState(this, inWaterParams);
+        Animator = GetComponent<Animator>();
+        var underwater = new SquidSwimState(this, inWaterParams);
         var air = new SquidAirState(this, inAirParams);
         var leavingWater = new SquidLeavingWaterState(this, leavingWaterParams, inWaterParams);
         var squirt = new SquidSquirtState(this, squirtStrength);
