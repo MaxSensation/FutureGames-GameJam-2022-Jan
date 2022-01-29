@@ -1,12 +1,14 @@
 using System;
 using MaxHelpers;
 using SquidStates;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class SquidController : MonoBehaviour, IDamageable
 {
     [SerializeField] private bool debugMode;
     [SerializeField] private GameObject waterSplashPrefab;
+    [SerializeField] private GameObject incPrefab;
     [SerializeField] private float inWaterSquirtStrength;
     [SerializeField] private float otherStatesWaterStrength;
     [SerializeField] private float maxVelocity;
@@ -48,10 +50,16 @@ public class SquidController : MonoBehaviour, IDamageable
         _stateMachine.AddTransition(air, underwater, () => _isUnderwater);
         _stateMachine.SetState(underwater);
         _squirt.OnEnteredState += DecreaseWaterLevel;
+        GameManager.Instance.Inputs.Player.Primary.performed += _ => FireInk();
         underwater.OnEnteredState += EnteredWater;
         underwater.OnExitState += ExitedWater;
         Rb.gravityScale = 4f;
         if (debugMode) GameManager.Instance.Inputs.Player.Enable();
+    }
+
+    private void FireInk()
+    {
+        Instantiate(incPrefab, transform.position, transform.rotation);
     }
 
     private void Update()
@@ -113,6 +121,9 @@ public class SquidController : MonoBehaviour, IDamageable
     {
         _waterRegenActive = false;
         _waterDegenActive = true;
+        var waterSplash = Instantiate(waterSplashPrefab, _water[0].ClosestPoint(transform.position + Vector3.up * 5f), Quaternion.identity);
+        waterSplash.transform.localScale = Vector3.one * Rb.velocity.magnitude * 0.01f;
+        Destroy(waterSplash, 0.1f);
     }
     
     private void DecreaseWaterLevel()

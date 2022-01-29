@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugMode: 1
   waterSplashPrefab: {fileID: 7014956110631451203, guid: 3565f61579a9de041ac7184621137074, type: 3}
+  incPrefab: {fileID: 9102520542802823879, guid: 88e530b357db6fe469b10d68add873ae, type: 3}
   inWaterSquirtStrength: 40
   otherStatesWaterStrength: 30
   maxVelocity: 60
