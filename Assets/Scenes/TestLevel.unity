@@ -476,14 +476,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5301837957049216649, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
-      propertyPath: squirtStrength
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 5301837957049216649, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
-      propertyPath: waterUseAmount
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5301837957049216654, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
       propertyPath: m_Name
       value: SquidPlayer
@@ -530,14 +522,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5301837957049216655, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5301837958098552003, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5301837958257741840, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
