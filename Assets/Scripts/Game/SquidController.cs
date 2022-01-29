@@ -1,7 +1,10 @@
 using System;
+using System.Collections;
+using System.Threading;
+using System.Threading.Tasks;
 using MaxHelpers;
 using SquidStates;
-using Unity.Mathematics;
+using UnityEditor;
 using UnityEngine;
 
 public class SquidController : MonoBehaviour, IDamageable
@@ -9,6 +12,7 @@ public class SquidController : MonoBehaviour, IDamageable
     [SerializeField] private bool debugMode;
     [SerializeField] private GameObject waterSplashPrefab;
     [SerializeField] private GameObject incPrefab;
+    [SerializeField] private int incTimer;
     [SerializeField] private float inWaterSquirtStrength;
     [SerializeField] private float otherStatesWaterStrength;
     [SerializeField] private float maxVelocity;
@@ -24,6 +28,9 @@ public class SquidController : MonoBehaviour, IDamageable
     private SquidDeathState _deathState;
     private SquidSquirtState _squirt;
     private readonly StateMachine _stateMachine = new ();
+    private int _currentInks = 3;
+    private Coroutine _inkCoroutineTimer;
+    private bool _inkTimerRunning;
 
     private void Start()
     {
@@ -54,23 +61,46 @@ public class SquidController : MonoBehaviour, IDamageable
         underwater.OnEnteredState += EnteredWater;
         underwater.OnExitState += ExitedWater;
         Rb.gravityScale = 4f;
+        GameManager.Instance.OnInksChanged?.Invoke(_currentInks);
         if (debugMode) GameManager.Instance.Inputs.Player.Enable();
     }
 
     private void FireInk()
     {
-        Instantiate(incPrefab, transform.position, transform.rotation);
+        if (_currentInks > 0 && !_inkTimerRunning){
+            Instantiate(incPrefab, transform.position, transform.rotation);
+            StartCoroutine(InkTimer());
+            if (_isUnderwater) return;
+            _currentInks -= 1;
+            GameManager.Instance.OnInksChanged?.Invoke(_currentInks);
+        }
     }
+
+    private IEnumerator InkTimer()
+    {
+        _inkTimerRunning = true;
+        yield return Helper.GetWait(incTimer);
+        _inkTimerRunning = false;
+    }
+
 
     private void Update()
     {
+        RefilInkIfInWater();
         CheckGround();
         CheckUnderWater();
         UpdateWaterLevel();
         _stateMachine.Tick();
         LimitVelocity();
     }
-    
+
+    private void RefilInkIfInWater()
+    {
+        if (!_isUnderwater) return;
+        _currentInks = 3;
+        GameManager.Instance.OnInksChanged?.Invoke(_currentInks);
+    }
+
     public void TakeDamage() => _stateMachine.SetState(_deathState);
 
     private void LimitVelocity()
