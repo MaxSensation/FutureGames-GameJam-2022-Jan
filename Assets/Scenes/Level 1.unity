@@ -8604,10 +8604,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1073129156038844406, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
-      propertyPath: m_SortingOrder
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 5301837957049216654, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
       propertyPath: m_Name
       value: SquidPlayer
@@ -9295,6 +9291,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Systems
       objectReference: {fileID: 0}
+    - target: {fileID: 607577004983206119, guid: bc452a37bc466ad4bb2253607ecd6b70, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc452a37bc466ad4bb2253607ecd6b70, type: 3}
 --- !u!1 &1715329524
@@ -9401,10 +9401,6 @@ PrefabInstance:
     - target: {fileID: 8653046002350599992, guid: 632263d96d642d14d8feec513a1fac93, type: 3}
       propertyPath: m_Name
       value: Main Camera
-      objectReference: {fileID: 0}
-    - target: {fileID: 8653046002350599996, guid: 632263d96d642d14d8feec513a1fac93, type: 3}
-      propertyPath: zoomOffset
-      value: -12
       objectReference: {fileID: 0}
     - target: {fileID: 8653046002350599997, guid: 632263d96d642d14d8feec513a1fac93, type: 3}
       propertyPath: m_RootOrder
