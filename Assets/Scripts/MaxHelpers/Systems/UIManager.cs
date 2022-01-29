@@ -15,6 +15,7 @@ namespace MaxHelpers {
         private OptionsState _optionsState;
         private InGameState _inGameState;
         public float CurrentWaterLevel { get; private set; }
+        public int CurrentInks { get; private set; }
 
         protected void Start()
         {
@@ -36,8 +37,10 @@ namespace MaxHelpers {
             // Set start state
             _stateMachine.SetState(mainMenuState);
             GameManager.Instance.OnWaterLevelChanged += UpdateWaterLevel;
+            GameManager.Instance.OnInksChanged += UpdateInks;
         }
         private void UpdateWaterLevel(float newValue) => CurrentWaterLevel = newValue;
+        private void UpdateInks(int newValue) => CurrentInks = newValue;
         private void Update() => _stateMachine.Tick();
         private bool IsExitPressedAndPrevState(IState state) => GameManager.Instance.Inputs.UI.ExitMenu.IsPressed() && _stateMachine.GetPreviousState() == state;
         public void GoToPreviousState() => _stateMachine.GoToPreviousState();
