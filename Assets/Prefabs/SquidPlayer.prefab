@@ -58,14 +58,14 @@ MonoBehaviour:
     rotateVelocity: 1
   inWaterParams:
     speed: 15
-    acceleration: 2
+    acceleration: 1
     rotationSpeed: 15
   leavingWaterParams:
     optimalAngle: 45
-    force: 5
-    maxVelocityForce: 2
-    minimumAngleFromTop: 0.8
-    minimumBoost: 0.1
+    force: 30
+    maxVelocityForce: 15
+    minimumAngleFromTop: 0.84
+    minimumBoost: 8
   groundMask:
     serializedVersion: 2
     m_Bits: 256
