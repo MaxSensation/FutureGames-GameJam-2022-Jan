@@ -1,4 +1,5 @@
-﻿using MaxHelpers;
+﻿using System;
+using MaxHelpers;
 using UnityEngine;
 
 namespace SquidStates
@@ -15,17 +16,22 @@ namespace SquidStates
 
         public void OnEnter()
         {
-            var up = (_squidController.Rb.velocity.normalized + (Vector2)_squidController.transform.up).normalized;
-            Debug.Log($"LeftDot: {Vector2.Dot(up, new Vector2(Mathf.Cos(_leavingWaterParams.optimalAngle), Mathf.Sin(_leavingWaterParams.optimalAngle)))} RightDot: {Vector2.Dot(up, new Vector2(Mathf.Cos(-_leavingWaterParams.optimalAngle), Mathf.Sin(-_leavingWaterParams.optimalAngle)))}");
-            var rightBoost = Scale( _leavingWaterParams.minimumAngleFromTop, 1f, _leavingWaterParams.minimumBoost, _leavingWaterParams.force, 
-                Vector2.Dot(up, new Vector2(Mathf.Cos(_leavingWaterParams.optimalAngle), Mathf.Sin(_leavingWaterParams.optimalAngle))));
-            var leftBoost = Scale( _leavingWaterParams.minimumAngleFromTop, 1f, _leavingWaterParams.minimumBoost, _leavingWaterParams.force, 
-                Mathf.Abs(Vector2.Dot(up, new Vector2(Mathf.Cos(-_leavingWaterParams.optimalAngle), Mathf.Sin(-_leavingWaterParams.optimalAngle)))));
-            Debug.Log($"RightBoost: {leftBoost}, LeftBoost: {rightBoost}");
-            if (Vector2.Dot(_squidController.transform.up, Vector2.right) > 0)
-                _squidController.Rb.velocity = _squidController.transform.up * (rightBoost * _squidController.Rb.velocity.magnitude / _leavingWaterParams.maxVelocityForce);
+            var transformUp = _squidController.transform.up;
+            var combindDir = (_squidController.Rb.velocity.normalized + (Vector2)transformUp).normalized;
+            var rightDot = Vector2.Dot(combindDir, new Vector2(Mathf.Cos(_leavingWaterParams.optimalAngle), Mathf.Sin(_leavingWaterParams.optimalAngle)));
+            var leftDot = Mathf.Abs(Vector2.Dot(combindDir, new Vector2(Mathf.Cos(-_leavingWaterParams.optimalAngle), Mathf.Sin(-_leavingWaterParams.optimalAngle))));
+            //Debug.Log($"LeftDot: {rightDot}, RightDot: {leftDot}");
+            var rightBoost = Scale( _leavingWaterParams.minimumAngleFromTop, 1f, _leavingWaterParams.minimumBoost, _leavingWaterParams.force, rightDot);
+            var leftBoost = Scale( _leavingWaterParams.minimumAngleFromTop, 1f, _leavingWaterParams.minimumBoost, _leavingWaterParams.force, leftDot);
+            //Debug.Log($"RightBoost: {rightBoost}, LeftBoost: {leftBoost}");
+            var newVelocity = Vector2.zero;
+            if (_squidController.Rb.velocity.x > 0f) 
+                newVelocity = (transformUp + new Vector3(_leavingWaterParams.horizontalBoost, 0, 0)).normalized * (rightBoost * _squidController.Rb.velocity.magnitude / _leavingWaterParams.maxVelocityForce);
+            else if(_squidController.Rb.velocity.x < 0f)
+                newVelocity = (transformUp + new Vector3(-_leavingWaterParams.horizontalBoost, 0, 0)).normalized * (leftBoost * _squidController.Rb.velocity.magnitude / _leavingWaterParams.maxVelocityForce);
             else
-                _squidController.Rb.velocity = _squidController.transform.up * (leftBoost * _squidController.Rb.velocity.magnitude / _leavingWaterParams.maxVelocityForce);
+                newVelocity = transformUp * _leavingWaterParams.fullyVerticalBoost * (_squidController.Rb.velocity.magnitude / _leavingWaterParams.maxVelocityForce);
+            _squidController.Rb.velocity = newVelocity;
         }
         
         private static float Scale(float oldMin, float oldMax, float newMin, float newMax, float oldValue){

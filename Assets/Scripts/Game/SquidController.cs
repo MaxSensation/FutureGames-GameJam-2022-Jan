@@ -24,7 +24,7 @@ public class SquidController : MonoBehaviour
         _stateMachine.AddAnyTransition(squirt, CanWaterSquirt);
         _stateMachine.AddTransition(squirt, air, () => !_isGrounded && !_isUnderwater);
         _stateMachine.AddTransition(squirt, underwater, () => !_isGrounded && _isUnderwater);
-        _stateMachine.AddTransition(squirt, underwater, () => _isGrounded && !_isUnderwater);
+        _stateMachine.AddTransition(squirt, ground, () => _isGrounded && !_isUnderwater);
         _stateMachine.AddTransition(ground, air, () => !_isGrounded && !_isUnderwater);
         _stateMachine.AddTransition(air, ground, () => _isGrounded && !_isUnderwater);
         _stateMachine.AddTransition(underwater, leavingWater, () => !_isUnderwater && !_isGrounded);
@@ -125,6 +125,8 @@ public class SquidController : MonoBehaviour
         public float optimalAngle;
         public float force;
         public float maxVelocityForce;
+        public float horizontalBoost;
+        public float fullyVerticalBoost;
         public float minimumAngleFromTop;
         public float minimumBoost;
     }
