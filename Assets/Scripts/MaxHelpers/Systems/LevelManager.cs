@@ -10,6 +10,7 @@ namespace MaxHelpers
         public float LoadingProgress { get; private set; }
         
         private void Start() => InitData("level");
+
         public async void LoadScene(string sceneName)
         {
             OnStartLoadEvent?.Invoke();

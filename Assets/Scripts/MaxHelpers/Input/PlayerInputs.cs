@@ -98,6 +98,15 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RestartLevel"",
+                    ""type"": ""Button"",
+                    ""id"": ""170cd3af-985c-4657-a491-8c50b7d7ead5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -373,6 +382,17 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3084f1d9-be72-4761-93b1-82e2a530672c"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""RestartLevel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -988,6 +1008,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         m_Player_RotateLeft = m_Player.FindAction("RotateLeft", throwIfNotFound: true);
         m_Player_OpenGameMenu = m_Player.FindAction("OpenGameMenu", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Player_RestartLevel = m_Player.FindAction("RestartLevel", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1068,6 +1089,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_RotateLeft;
     private readonly InputAction m_Player_OpenGameMenu;
     private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_RestartLevel;
     public struct PlayerActions
     {
         private @PlayerInputs m_Wrapper;
@@ -1080,6 +1102,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         public InputAction @RotateLeft => m_Wrapper.m_Player_RotateLeft;
         public InputAction @OpenGameMenu => m_Wrapper.m_Player_OpenGameMenu;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @RestartLevel => m_Wrapper.m_Player_RestartLevel;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1113,6 +1136,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @RestartLevel.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRestartLevel;
+                @RestartLevel.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRestartLevel;
+                @RestartLevel.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRestartLevel;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1141,6 +1167,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @RestartLevel.started += instance.OnRestartLevel;
+                @RestartLevel.performed += instance.OnRestartLevel;
+                @RestartLevel.canceled += instance.OnRestartLevel;
             }
         }
     }
@@ -1313,6 +1342,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         void OnRotateLeft(InputAction.CallbackContext context);
         void OnOpenGameMenu(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnRestartLevel(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

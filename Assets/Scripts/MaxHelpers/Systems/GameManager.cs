@@ -12,8 +12,6 @@ namespace MaxHelpers
             Inputs = new();
         }
 
-        private void Start()
-        {
-        }
+        private void Start() => Inputs.Player.RestartLevel.performed += _ => LevelManager.Instance.LoadLastLevel();
     }
 }
