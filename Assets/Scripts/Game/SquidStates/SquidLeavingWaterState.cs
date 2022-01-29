@@ -21,8 +21,10 @@ namespace SquidStates
             var combindDir = (_squidController.Rb.velocity.normalized + (Vector2)transformUp).normalized;
             var rightDot = Vector2.Dot(combindDir, new Vector2(Mathf.Cos(_leavingWaterParams.optimalAngle), Mathf.Sin(_leavingWaterParams.optimalAngle)));
             var leftDot = Mathf.Abs(Vector2.Dot(combindDir, new Vector2(Mathf.Cos(-_leavingWaterParams.optimalAngle), Mathf.Sin(-_leavingWaterParams.optimalAngle))));
+            //Debug.Log($"LeftDot: {rightDot}, RightDot: {leftDot}");
             var rightBoost = Scale( _leavingWaterParams.minimumAngleFromTop, 1f, _leavingWaterParams.minimumBoost, _leavingWaterParams.force, rightDot);
             var leftBoost = Scale( _leavingWaterParams.minimumAngleFromTop, 1f, _leavingWaterParams.minimumBoost, _leavingWaterParams.force, leftDot);
+            //Debug.Log($"RightBoost: {rightBoost}, LeftBoost: {leftBoost}");
             Vector2 newVelocity;
             var velocityMulti = _squidController.Rb.velocity.magnitude / _inWaterParams.speed;
             if (_squidController.Rb.velocity.x > 0f) 
@@ -31,7 +33,6 @@ namespace SquidStates
                 newVelocity = (transformUp + new Vector3(-_leavingWaterParams.horizontalBoost  * leftDot, 0, 0)).normalized * leftBoost * velocityMulti;
             else
                 newVelocity = transformUp * _leavingWaterParams.fullyVerticalBoost * velocityMulti;
-            //_squidController.Rb.velocity = newVelocity.normalized * Scale(_leavingWaterParams.minimumBoost, newVelocity.magnitude, _leavingWaterParams.minimumBoost, _leavingWaterParams.maxVelocityForce, newVelocity.magnitude);
             _squidController.Rb.velocity = newVelocity;
         }
         
