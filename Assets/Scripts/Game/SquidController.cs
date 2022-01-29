@@ -3,96 +3,55 @@ using MaxHelpers;
 using SquidStates;
 using UnityEngine;
 
-public class SquidController : MonoBehaviour
+public class SquidController : MonoBehaviour, IDamageable
 {
     [SerializeField] private bool debugMode;
+    [SerializeField] private GameObject waterSplashPrefab;
     [SerializeField] private float inWaterSquirtStrength;
     [SerializeField] private float otherStatesWaterStrength;
     [SerializeField] private float maxVelocity;
     [SerializeField] private InAirParams inAirParams;
     [SerializeField] private InWaterParams inWaterParams;
     [SerializeField] private LeavingWaterParams leavingWaterParams;
+    [SerializeField] private bool changeColorWithWaterLevel;
+    [SerializeField] private Color32 fullHealthyWaterColor;
+    [SerializeField] private Color32 fullDeadWaterColor;
     public Rigidbody2D Rb { get; private set; }
     public Animator Animator { get; private set; }
-    
+    private SpriteRenderer _sprite;
+    private SquidDeathState _deathState;
+    private SquidSquirtState _squirt;
     private readonly StateMachine _stateMachine = new ();
 
     private void Start()
     {
+        _sprite = GetComponent<SpriteRenderer>();
         WaterLevel = 1f;
         Rb = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();
         var underwater = new SquidSwimState(this, inWaterParams);
         var air = new SquidAirState(this, inAirParams);
         var leavingWater = new SquidLeavingWaterState(this, leavingWaterParams, inWaterParams);
-        var squirt = new SquidSquirtState(this, inWaterSquirtStrength);
+        _squirt = new SquidSquirtState(this, inWaterSquirtStrength);
         var ground = new SquidGroundState(this);
-        var death = new SquidDeathState(this);
-        _stateMachine.AddTransition(air, death, () => _isGrounded && WaterLevel <= 0f);
-        _stateMachine.AddTransition(ground, death, () => _isGrounded && WaterLevel <= 0f);
-        _stateMachine.AddAnyTransition(squirt, CanWaterSquirt);
-        _stateMachine.AddTransition(squirt, air, () => !_isGrounded && !_isUnderwater);
-        _stateMachine.AddTransition(squirt, underwater, () => !_isGrounded && _isUnderwater);
-        _stateMachine.AddTransition(squirt, ground, () => _isGrounded && !_isUnderwater);
+        _deathState = new SquidDeathState(this);
+        _stateMachine.AddTransition(air, _deathState, () => _isGrounded && WaterLevel <= 0f);
+        _stateMachine.AddTransition(ground, _deathState, () => _isGrounded && WaterLevel <= 0f);
+        _stateMachine.AddAnyTransition(_squirt, CanWaterSquirt);
+        _stateMachine.AddTransition(_squirt, air, () => !_isGrounded && !_isUnderwater);
+        _stateMachine.AddTransition(_squirt, underwater, () => !_isGrounded && _isUnderwater);
+        _stateMachine.AddTransition(_squirt, ground, () => _isGrounded && !_isUnderwater);
         _stateMachine.AddTransition(ground, air, () => !_isGrounded && !_isUnderwater);
         _stateMachine.AddTransition(air, ground, () => _isGrounded && !_isUnderwater);
         _stateMachine.AddTransition(underwater, leavingWater, () => !_isUnderwater && !_isGrounded);
         _stateMachine.AddTransition(leavingWater, air, () => true);
         _stateMachine.AddTransition(air, underwater, () => _isUnderwater);
         _stateMachine.SetState(underwater);
-        squirt.OnEnteredState += DecreaseWaterLevel;
+        _squirt.OnEnteredState += DecreaseWaterLevel;
         underwater.OnEnteredState += EnteredWater;
         underwater.OnExitState += ExitedWater;
         Rb.gravityScale = 4f;
         if (debugMode) GameManager.Instance.Inputs.Player.Enable();
-    }
-
-    #region WaterMechinic
-    [Header("Water params")]
-    [SerializeField] private float waterRegenAmount;
-    [SerializeField] private float waterDegenAmount;
-    [SerializeField] private float squirtWaterUseAmount;
-    private float WaterLevel { get; set; }
-    private bool _waterRegenActive;
-    private bool _waterDegenActive;
-    
-    private void EnteredWater()
-    {
-        _waterRegenActive = true;
-        _waterDegenActive = false;
-    }
-
-    private void ExitedWater()
-    {
-        _waterRegenActive = false;
-        _waterDegenActive = true;
-    }
-    
-    private void DecreaseWaterLevel()
-    {
-        if (_isUnderwater) return;
-        WaterLevel -= squirtWaterUseAmount;
-        GameManager.Instance.OnWaterLevelChanged?.Invoke(WaterLevel);
-    }
-    
-    private void UpdateWaterLevel()
-    {
-        if (_waterRegenActive)
-        {
-            WaterLevel += waterRegenAmount * Time.deltaTime;
-            if (WaterLevel > 1f) WaterLevel = 1f;            
-        } else if (_waterDegenActive)
-        {
-            WaterLevel -= waterDegenAmount * Time.deltaTime;
-            if (WaterLevel < 0f) WaterLevel = 0f;
-        }
-        GameManager.Instance.OnWaterLevelChanged?.Invoke(WaterLevel);
-    }
-    #endregion
-
-    private bool CanWaterSquirt()
-    {
-        return GameManager.Instance.Inputs.Player.Jump.WasPressedThisFrame() && squirtWaterUseAmount <= WaterLevel;
     }
 
     private void Update()
@@ -103,6 +62,8 @@ public class SquidController : MonoBehaviour
         _stateMachine.Tick();
         LimitVelocity();
     }
+    
+    public void TakeDamage() => _stateMachine.SetState(_deathState);
 
     private void LimitVelocity()
     {
@@ -127,6 +88,68 @@ public class SquidController : MonoBehaviour
         var velocity = Rb.velocity;
         Rb.velocity = Vector3.MoveTowards(velocity, Vector2.Lerp(velocity, idealVel, control), control * 100f * Time.deltaTime);
     }
+
+    #region WaterMechinic
+    [Header("Water params")]
+    [SerializeField] private float waterRegenAmount;
+    [SerializeField] private float waterDegenAmount;
+    [SerializeField] private float squirtWaterUseAmount;
+    private float WaterLevel { get; set; }
+
+    private bool _waterRegenActive;
+    private bool _waterDegenActive;
+    
+    private void EnteredWater()
+    {
+        _waterRegenActive = true;
+        _waterDegenActive = false;
+        if (_stateMachine.GetPreviousState() == _squirt) return;
+        var waterSplash = Instantiate(waterSplashPrefab, _water[0].ClosestPoint(transform.position + Vector3.up * 5f), Quaternion.identity);
+        waterSplash.transform.localScale = Vector3.one * Rb.velocity.magnitude * 0.01f;
+        Destroy(waterSplash, 0.1f);
+    }
+
+    private void ExitedWater()
+    {
+        _waterRegenActive = false;
+        _waterDegenActive = true;
+    }
+    
+    private void DecreaseWaterLevel()
+    {
+        if (_isUnderwater) return;
+        WaterLevel -= squirtWaterUseAmount;
+        if(changeColorWithWaterLevel) _sprite.color = Color32.Lerp(fullDeadWaterColor, fullHealthyWaterColor, WaterLevel);
+        GameManager.Instance.OnWaterLevelChanged?.Invoke(WaterLevel);
+    }
+    
+    private void UpdateWaterLevel()
+    {
+        if (_waterRegenActive)
+        {
+            WaterLevel += waterRegenAmount * Time.deltaTime;
+            if (WaterLevel > 1f) WaterLevel = 1f;            
+        } else if (_waterDegenActive)
+        {
+            WaterLevel -= waterDegenAmount * Time.deltaTime;
+            if (WaterLevel < 0f) WaterLevel = 0f;
+        } else return;
+        if(changeColorWithWaterLevel) _sprite.color = Color32.Lerp(fullDeadWaterColor, fullHealthyWaterColor, WaterLevel);
+        GameManager.Instance.OnWaterLevelChanged?.Invoke(WaterLevel);
+    }
+    private bool CanWaterSquirt()
+    {
+        return GameManager.Instance.Inputs.Player.Jump.WasPressedThisFrame() && squirtWaterUseAmount <= WaterLevel;
+    }
+    public void Squirt()
+    {
+        if (_isUnderwater)
+        {
+            Rb.velocity = transform.up * inWaterSquirtStrength;   
+        }else
+            Rb.velocity = transform.up * otherStatesWaterStrength;
+    }
+    #endregion
 
     #region Detection
     
@@ -192,14 +215,5 @@ public class SquidController : MonoBehaviour
         public float fullyVerticalBoost;
         public float minimumAngleFromTop;
         public float minimumBoost;
-    }
-
-    public void Squirt()
-    {
-        if (_isUnderwater)
-        {
-            Rb.velocity = transform.up * inWaterSquirtStrength;   
-        }else
-            Rb.velocity = transform.up * otherStatesWaterStrength;
     }
 }
