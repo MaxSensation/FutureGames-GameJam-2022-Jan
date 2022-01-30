@@ -252,6 +252,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc1026689648774aac294dfc228eb2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  killAnimationSpeed: 1
+  deathSound: {fileID: 8300000, guid: 8ef1834158d7c8f4699da8bbab31ce6f, type: 3}
   movementType: 2
   path: {fileID: 589606250186797371}
   changeWaypointDistance: 0.1
