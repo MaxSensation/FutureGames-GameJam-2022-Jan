@@ -9533,7 +9533,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 607577004387412966, guid: bc452a37bc466ad4bb2253607ecd6b70, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 607577004983206117, guid: bc452a37bc466ad4bb2253607ecd6b70, type: 3}
       propertyPath: m_RootOrder

@@ -1,9 +1,9 @@
 .DefaultButton {
-    background-color: rgb(120, 120, 120);
-    border-left-width: 0;
-    border-right-width: 0;
-    border-top-width: 0;
-    border-bottom-width: 0;
+    background-color: rgb(114, 107, 255);
+    border-left-width: 3px;
+    border-right-width: 3px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -16,16 +16,26 @@
     margin-bottom: 4px;
     width: 60%;
     height: 20%;
+    background-image: none;
+    -unity-background-scale-mode: scale-and-crop;
+    -unity-background-image-tint-color: rgba(255, 255, 255, 255);
+    -unity-font: url('project://database/Assets/Fonts/Odin-Bold.ttf?fileID=12800000&guid=739df82e9c9627543a0b5fff45eccfc4&type=3#Odin-Bold');
+    -unity-font-definition: none;
+    color: rgba(255, 247, 248, 255);
+    border-left-color: rgb(255, 232, 255);
+    border-right-color: rgb(255, 232, 255);
+    border-top-color: rgb(255, 232, 255);
+    border-bottom-color: rgb(255, 232, 255);
 }
 
 .DefaultButton:hover {
     height: 22%;
     width: 62%;
-    background-color: rgb(159, 159, 159);
-    border-left-width: 0;
-    border-right-width: 0;
-    border-top-width: 0;
-    border-bottom-width: 0;
+    background-color: rgb(198, 207, 255);
+    border-left-width: 3px;
+    border-right-width: 3px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -36,16 +46,20 @@
     margin-right: 4px;
     margin-top: 4px;
     margin-bottom: 4px;
+    border-left-color: rgba(122, 118, 200, 255);
+    border-right-color: rgba(122, 118, 200, 255);
+    border-top-color: rgba(122, 118, 200, 255);
+    border-bottom-color: rgba(122, 118, 200, 255);
 }
 
 .DefaultButton:active {
     height: 22%;
     width: 62%;
-    background-color: rgb(0, 0, 0);
-    border-left-width: 0;
-    border-right-width: 0;
-    border-top-width: 0;
-    border-bottom-width: 0;
+    background-color: rgb(61, 56, 152);
+    border-left-width: 3px;
+    border-right-width: 3px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -57,18 +71,22 @@
     margin-top: 4px;
     margin-bottom: 4px;
     color: rgb(255, 255, 255);
+    border-left-color: rgba(36, 33, 94, 255);
+    border-right-color: rgba(36, 33, 94, 255);
+    border-top-color: rgba(36, 33, 94, 255);
+    border-bottom-color: rgba(36, 33, 94, 255);
 }
 
 .DefaultSubHeader {
     font-size: 20px;
     -unity-font-style: bold;
-    color: rgba(255, 0, 0, 255);
+    color: rgb(255, 0, 0);
 }
 
 .DefaultSlider {
     padding-top: 0;
     margin-bottom: 18px;
-    color: rgba(0, 0, 0, 255);
+    color: rgb(0, 0, 0);
 }
 
 .DefaultDropdown {
@@ -89,8 +107,18 @@
     border-bottom-left-radius: 25px;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-left-color: rgba(197, 114, 114, 255);
+    border-right-color: rgba(197, 114, 114, 255);
+    border-top-color: rgba(197, 114, 114, 255);
+    border-bottom-color: rgba(197, 114, 114, 255);
 }
 
 .DefaultLable {
-    color: rgba(0, 0, 0, 255);
+    color: rgb(255, 255, 242);
+    -unity-font: url('project://database/Assets/Fonts/Odin-Bold.ttf?fileID=12800000&guid=739df82e9c9627543a0b5fff45eccfc4&type=3#Odin-Bold');
+    -unity-font-definition: none;
 }
