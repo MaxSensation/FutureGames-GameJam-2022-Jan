@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using MaxHelpers;
 using SquidStates;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SquidController : MonoBehaviour, IDamageable
 {
@@ -12,6 +14,7 @@ public class SquidController : MonoBehaviour, IDamageable
     [SerializeField] private Animator waterDash;
     [SerializeField] private float waterTimer;
     [SerializeField] private GameObject incPrefab;
+    [SerializeField] private float incAutoAimRange;
     [SerializeField] private float incTimer;
     [SerializeField] private float inWaterSquirtStrength;
     [SerializeField] private float otherStatesWaterStrength;
@@ -22,6 +25,8 @@ public class SquidController : MonoBehaviour, IDamageable
     [SerializeField] private bool changeColorWithWaterLevel;
     [SerializeField] private Color32 fullHealthyWaterColor;
     [SerializeField] private Color32 fullDeadWaterColor;
+    [Header("Sound")] 
+    [SerializeField] private AudioClip enemyInRangeSound;
     public Rigidbody2D Rb { get; private set; }
     public Animator Animator { get; private set; }
     private SpriteRenderer _sprite;
@@ -35,6 +40,7 @@ public class SquidController : MonoBehaviour, IDamageable
     private Coroutine _waterCoroutineTimer;
     private bool _waterTimerRunning;
     private static readonly int Dash = Animator.StringToHash("Dash");
+    private Transform _closestEnemy;
 
     private void Start()
     {
@@ -61,10 +67,10 @@ public class SquidController : MonoBehaviour, IDamageable
         _stateMachine.AddTransition(air, _underwater, () => _isUnderwater);
         _stateMachine.SetState(_underwater);
         _squirt.OnEnteredState += DecreaseWaterLevel;
-        GameManager.Instance.Inputs.Player.Primary.performed += _ => FireInk();
         _underwater.OnEnteredState += EnteredWater;
         _underwater.OnExitState += ExitedWater;
         Rb.gravityScale = 4f;
+        GameManager.Instance.Inputs.Player.Primary.performed += FireInk;
         GameManager.Instance.OnInksChanged?.Invoke(_currentInks);
         OnDiedEvent += Reset;
         if (debugMode) GameManager.Instance.Inputs.Player.Enable();
@@ -74,18 +80,28 @@ public class SquidController : MonoBehaviour, IDamageable
     {
         Rb.velocity = Vector2.zero;
         transform.rotation = Quaternion.Euler(0,0,0);
+        WaterLevel = 1f;
+        _currentInks = 3;
+        GameManager.Instance.OnInksChanged?.Invoke(_currentInks);
+        GameManager.Instance.OnWaterLevelChanged?.Invoke(WaterLevel);
         _stateMachine.SetState(_underwater);
     }
 
-    private void FireInk()
+    private void FireInk(InputAction.CallbackContext callbackContext)
     {
-        if (_currentInks > 0 && !_inkTimerRunning){
-            Instantiate(incPrefab, transform.position, transform.rotation);
-            StartCoroutine(InkTimer());
-            if (_isUnderwater) return;
-            _currentInks -= 1;
-            GameManager.Instance.OnInksChanged?.Invoke(_currentInks);
-        }
+        if (_currentInks <= 0 || _inkTimerRunning) return;
+        Instantiate(incPrefab, transform.position, RotateToClosestEnemy());
+        StartCoroutine(InkTimer());
+        if (_isUnderwater) return;
+        _currentInks -= 1;
+        GameManager.Instance.OnInksChanged?.Invoke(_currentInks);
+    }
+    
+    private Quaternion RotateToClosestEnemy()
+    {
+        if (_closestEnemy == null) return transform.rotation * new quaternion(0,0,180,0);
+        var dir = _closestEnemy.position - transform.position;
+        return Quaternion.AngleAxis((Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg) -90f, Vector3.forward);
     }
 
     private IEnumerator InkTimer()
@@ -104,12 +120,34 @@ public class SquidController : MonoBehaviour, IDamageable
 
     private void Update()
     {
+        UpdateClosestEnemy();
         RefilInkIfInWater();
         CheckGround();
         CheckUnderWater();
         UpdateWaterLevel();
         _stateMachine.Tick();
         LimitVelocity();
+    }
+
+    private void UpdateClosestEnemy()
+    {
+        var shortestDistance = float.MaxValue;
+        Transform enemyTrans = null;
+        foreach (var enemy in GameManager.Instance.GetAllEnemies())
+        {
+            var distance = Vector2.Distance(transform.position, enemy.position);
+            if (!(distance < shortestDistance)) continue;
+            shortestDistance = distance;
+            enemyTrans = enemy;
+        }
+        if (enemyTrans == null || shortestDistance > incAutoAimRange)
+        {
+            _closestEnemy = null;
+            return;
+        }
+        if (_closestEnemy == enemyTrans) return;
+        _closestEnemy = enemyTrans;
+        AudioManager.Instance.PlaySound(enemyInRangeSound);
     }
 
     private void RefilInkIfInWater()
@@ -278,5 +316,10 @@ public class SquidController : MonoBehaviour, IDamageable
         public float fullyVerticalBoost;
         public float minimumAngleFromTop;
         public float minimumBoost;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.Inputs.Player.Primary.performed -= FireInk;
     }
 }

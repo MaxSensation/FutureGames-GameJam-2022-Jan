@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace MaxHelpers
@@ -10,6 +9,7 @@ namespace MaxHelpers
         public Action<float> OnWaterLevelChanged;
         public Action<int> OnInksChanged;
         public PlayerInputs Inputs { get; private set; }
+        private readonly List<Transform> _enemies = new();
 
         protected override void Awake()
         {
@@ -19,9 +19,11 @@ namespace MaxHelpers
 
         private void Start() => Inputs.Player.RestartLevel.performed += _ => LevelManager.Instance.LoadLastLevel();
 
-        public static List<Transform> GetAllEnemies()
+        public List<Transform> GetAllEnemies() => _enemies;
+        public void RegisterEnemy(Transform enemy) => _enemies.Add(enemy);
+        public void DeregisterEnemy(Transform enemy)
         {
-            return GameObject.FindGameObjectsWithTag("Enemy").Select(enemy => enemy.transform).ToList();
+            if (_enemies.Contains(enemy)) _enemies.Remove(enemy);
         }
     }
 }

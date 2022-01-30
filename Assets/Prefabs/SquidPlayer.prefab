@@ -54,7 +54,8 @@ MonoBehaviour:
   waterSplashPrefab: {fileID: 7014956110631451203, guid: 3565f61579a9de041ac7184621137074, type: 3}
   waterDash: {fileID: 5638748041636108082}
   waterTimer: 0.5
-  incPrefab: {fileID: 9102520542802823879, guid: 88e530b357db6fe469b10d68add873ae, type: 3}
+  incPrefab: {fileID: 3079997352662459981, guid: 1f81f208ee82a814fab1e26ca7e8d5f8, type: 3}
+  incAutoAimRange: 5
   incTimer: 1
   inWaterSquirtStrength: 40
   otherStatesWaterStrength: 40
@@ -84,6 +85,7 @@ MonoBehaviour:
   fullDeadWaterColor:
     serializedVersion: 2
     rgba: 4287072135
+  enemyInRangeSound: {fileID: 8300000, guid: 1a23bec3582cda743afa7c6d338b655f, type: 3}
   waterRegenAmount: 0.8
   waterDegenAmount: 0.2
   squirtWaterUseAmount: 0.25
@@ -131,7 +133,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.5, y: 1}
+  m_Size: {x: 0.72, y: 1}
   m_Direction: 0
 --- !u!212 &1073129156038844406
 SpriteRenderer:
