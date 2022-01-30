@@ -5,6 +5,7 @@ using SquidStates;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 public class SquidController : MonoBehaviour, IDamageable
 {
@@ -30,6 +31,10 @@ public class SquidController : MonoBehaviour, IDamageable
     [SerializeField] private AudioClip waterOutSound;
     [SerializeField] private AudioClip waterInSound;
     [SerializeField] private AudioClip[] swimSounds;
+    [SerializeField] private AudioClip[] shootInkSounds;
+    [SerializeField] private AudioClip emptyInkSound;
+    [SerializeField] private AudioClip[] shootWaterSounds;
+    [SerializeField] private AudioClip emptyWaterSound;
     public Rigidbody2D Rb { get; private set; }
     public Animator Animator { get; private set; }
     private SpriteRenderer _sprite;
@@ -92,8 +97,13 @@ public class SquidController : MonoBehaviour, IDamageable
 
     private void FireInk(InputAction.CallbackContext callbackContext)
     {
-        if (_currentInks <= 0 || _inkTimerRunning) return;
+        if (_currentInks <= 0 || _inkTimerRunning)
+        {
+            AudioManager.Instance.PlaySound(emptyInkSound);
+            return;
+        }
         Instantiate(incPrefab, transform.position, RotateToClosestEnemy());
+        AudioManager.Instance.PlaySound(shootInkSounds[Random.Range(0,shootInkSounds.Length)]);
         StartCoroutine(InkTimer());
         if (_isUnderwater) return;
         _currentInks -= 1;
@@ -240,13 +250,15 @@ public class SquidController : MonoBehaviour, IDamageable
         if(changeColorWithWaterLevel) _sprite.color = Color32.Lerp(fullDeadWaterColor, fullHealthyWaterColor, WaterLevel);
         GameManager.Instance.OnWaterLevelChanged?.Invoke(WaterLevel);
     }
-    private bool CanWaterSquirt()
-    {
-        return GameManager.Instance.Inputs.Player.Jump.WasPressedThisFrame() && squirtWaterUseAmount <= WaterLevel;
-    }
+    private bool CanWaterSquirt() => GameManager.Instance.Inputs.Player.Jump.WasPressedThisFrame() && squirtWaterUseAmount <= WaterLevel;
+
     public void Squirt()
     {
-        if (_waterTimerRunning) return;
+        if (_waterTimerRunning)
+        {
+            AudioManager.Instance.PlaySound(waterOutSound);   
+            return;
+        }
         if (_isUnderwater)
         {
             Rb.velocity = transform.up * inWaterSquirtStrength;   
@@ -254,6 +266,7 @@ public class SquidController : MonoBehaviour, IDamageable
             Rb.velocity = transform.up * otherStatesWaterStrength;
         waterDash.SetTrigger(Dash);
         StartCoroutine(WaterTimer());
+        AudioManager.Instance.PlaySound(shootWaterSounds[Random.Range(0, shootWaterSounds.Length)]);
     }
     #endregion
 

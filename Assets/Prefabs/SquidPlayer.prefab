@@ -92,6 +92,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 610599598efdb9941895fa1afd7e6a51, type: 3}
   - {fileID: 8300000, guid: 806c6a51c18da3e48b3df9eabc049f46, type: 3}
   - {fileID: 8300000, guid: 259e9b3848d88fe44bbcacc3628bd148, type: 3}
+  shootInkSounds:
+  - {fileID: 8300000, guid: 78f74f076ed964e44827cedd39382c80, type: 3}
+  emptyInkSound: {fileID: 8300000, guid: 5e52c5ee8e8cdc44582dc4df9e7b7953, type: 3}
+  shootWaterSounds:
+  - {fileID: 8300000, guid: 9b6c91f5656bc9b438597d99607fcce9, type: 3}
+  - {fileID: 8300000, guid: 9519f3343a7e97743a8b49b41145eccd, type: 3}
+  - {fileID: 8300000, guid: 3e7666740f4168c4892c2d1d01937a01, type: 3}
+  emptyWaterSound: {fileID: 8300000, guid: bb3947e44d1186f438b2b2954d397a0b, type: 3}
   waterRegenAmount: 0.8
   waterDegenAmount: 0.2
   squirtWaterUseAmount: 0.25
