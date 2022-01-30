@@ -1,10 +1,12 @@
 ﻿using System;
+using MaxHelpers;
 using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour, IDamageable
 {
     public static Action<Transform> OnEnemySpawnedEvent, OnEnemyDespawnEvent;
     [SerializeField] private float killAnimationSpeed;
+    [SerializeField] private AudioClip deathSound;
     private bool _dead;
 
     private void OnEnable()
@@ -22,6 +24,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     {
         _dead = true;
         Destroy(gameObject, killAnimationSpeed);
+        AudioManager.Instance.PlaySound(deathSound);
     }
 
     private void OnDestroy()

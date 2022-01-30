@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   killAnimationSpeed: 1
+  deathSound: {fileID: 8300000, guid: bef6ac9d89b14a548910de6c531beb93, type: 3}
 --- !u!95 &8363514927100685216
 Animator:
   serializedVersion: 4

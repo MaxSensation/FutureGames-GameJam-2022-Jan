@@ -34,7 +34,9 @@ public class SquidController : MonoBehaviour, IDamageable
     [SerializeField] private AudioClip[] shootInkSounds;
     [SerializeField] private AudioClip emptyInkSound;
     [SerializeField] private AudioClip[] shootWaterSounds;
-    [SerializeField] private AudioClip emptyWaterSound;
+    [SerializeField] private AudioClip waterEmptySound;
+    [SerializeField] private AudioClip deathSound;
+    [SerializeField] private AudioClip[] grounSounds;
     public Rigidbody2D Rb { get; private set; }
     public Animator Animator { get; private set; }
     private SpriteRenderer _sprite;
@@ -49,6 +51,8 @@ public class SquidController : MonoBehaviour, IDamageable
     private bool _waterTimerRunning;
     private static readonly int Dash = Animator.StringToHash("Dash");
     private Transform _closestEnemy;
+    private float _lastSwimSoundTime;
+    private const float TimeBetweenGronSound = 0.7f;
 
     private void Start()
     {
@@ -61,7 +65,7 @@ public class SquidController : MonoBehaviour, IDamageable
         var leavingWater = new SquidLeavingWaterState(this, leavingWaterParams, inWaterParams);
         _squirt = new SquidSquirtState(this, inWaterSquirtStrength);
         var ground = new SquidGroundState(this);
-        _deathState = new SquidDeathState(this);
+        _deathState = new SquidDeathState(this, deathSound);
         _stateMachine.AddTransition(air, _deathState, () => _isGrounded && WaterLevel <= 0f);
         _stateMachine.AddTransition(ground, _deathState, () => _isGrounded && WaterLevel <= 0f);
         _stateMachine.AddAnyTransition(_squirt, CanWaterSquirt);
@@ -139,6 +143,14 @@ public class SquidController : MonoBehaviour, IDamageable
         UpdateWaterLevel();
         _stateMachine.Tick();
         LimitVelocity();
+        CheckIfCloseToDeath();
+    }
+
+    private void CheckIfCloseToDeath()
+    {
+        if (WaterLevel > 0.4f || Time.time - _lastSwimSoundTime < TimeBetweenGronSound) return;
+        AudioManager.Instance.PlaySound(grounSounds[Random.Range(0, grounSounds.Length)]);
+        _lastSwimSoundTime = Time.time;
     }
 
     private void UpdateClosestEnemy()
@@ -256,7 +268,7 @@ public class SquidController : MonoBehaviour, IDamageable
     {
         if (_waterTimerRunning)
         {
-            AudioManager.Instance.PlaySound(waterOutSound);   
+            AudioManager.Instance.PlaySound(waterEmptySound);   
             return;
         }
         if (_isUnderwater)
