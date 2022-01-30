@@ -55,7 +55,7 @@ MonoBehaviour:
   waterDash: {fileID: 5638748041636108082}
   waterTimer: 0.5
   incPrefab: {fileID: 3079997352662459981, guid: 1f81f208ee82a814fab1e26ca7e8d5f8, type: 3}
-  incAutoAimRange: 5
+  incAutoAimRange: 10
   incTimer: 1
   inWaterSquirtStrength: 40
   otherStatesWaterStrength: 40
@@ -105,9 +105,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c66484c9785859243b9799693494a9eb, type: 3}
   - {fileID: 8300000, guid: 6a7bbc6f471f6e44bb9539e00d8450ec, type: 3}
   - {fileID: 8300000, guid: bbf604b9ab6f77b4fbf331629bafc80a, type: 3}
-  waterRegenAmount: 0.8
-  waterDegenAmount: 0.2
-  squirtWaterUseAmount: 0.25
+  waterRegenAmount: 1
+  waterDegenAmount: 0.05
+  squirtWaterUseAmount: 0.15
   groundMask:
     serializedVersion: 2
     m_Bits: 256
