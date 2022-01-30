@@ -15,13 +15,18 @@ namespace MaxHelpers
         {
             base.Awake();
             Inputs = new();
+            Enemy.OnEnemySpawnedEvent += RegisterEnemy;
+            Enemy.OnEnemyDespawnEvent += DeregisterEnemy;
         }
 
-        private void Start() => Inputs.Player.RestartLevel.performed += _ => LevelManager.Instance.LoadLastLevel();
+        private void Start()
+        {
+            Inputs.Player.RestartLevel.performed += _ => LevelManager.Instance.LoadLastLevel();
+        }
 
         public List<Transform> GetAllEnemies() => _enemies;
         public void RegisterEnemy(Transform enemy) => _enemies.Add(enemy);
-        public void DeregisterEnemy(Transform enemy)
+        private void DeregisterEnemy(Transform enemy)
         {
             if (_enemies.Contains(enemy)) _enemies.Remove(enemy);
         }
