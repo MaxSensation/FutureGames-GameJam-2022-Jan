@@ -8,6 +8,7 @@ namespace MaxHelpers
     {
         public Action<float> OnWaterLevelChanged;
         public Action<int> OnInksChanged;
+        public Action OnWinEvent;
         public PlayerInputs Inputs { get; private set; }
         private readonly List<Transform> _enemies = new();
 

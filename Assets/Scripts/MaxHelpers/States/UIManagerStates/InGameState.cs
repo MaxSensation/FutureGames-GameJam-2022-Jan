@@ -6,7 +6,7 @@ namespace MaxHelpers
     public class InGameState : UIBaseState, IState
     {
         private ProgressBar _progressBar;
-        private VisualElement _inkOne, _inkTwo, _inkThree;
+        private VisualElement _inkOne, _inkTwo, _inkThree, _winScreen;
 
         protected internal InGameState(UIDocument uiDoc, VisualTreeAsset asset) : base(uiDoc, asset)
         { }
@@ -20,7 +20,11 @@ namespace MaxHelpers
             _inkOne = UIDoc.rootVisualElement.Q<VisualElement>("InkOne");
             _inkTwo = UIDoc.rootVisualElement.Q<VisualElement>("InkTwo");
             _inkThree = UIDoc.rootVisualElement.Q<VisualElement>("InkThree");
+            _winScreen = UIDoc.rootVisualElement.Q<VisualElement>("WinScreen");
+            GameManager.Instance.OnWinEvent += Win;
         }
+
+        private void Win() => _winScreen.style.visibility = Visibility.Visible;
 
         public void Tick()
         {
