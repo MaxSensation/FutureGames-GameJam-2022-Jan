@@ -27,6 +27,9 @@ public class SquidController : MonoBehaviour, IDamageable
     [SerializeField] private Color32 fullDeadWaterColor;
     [Header("Sound")] 
     [SerializeField] private AudioClip enemyInRangeSound;
+    [SerializeField] private AudioClip waterOutSound;
+    [SerializeField] private AudioClip waterInSound;
+    [SerializeField] private AudioClip[] swimSounds;
     public Rigidbody2D Rb { get; private set; }
     public Animator Animator { get; private set; }
     private SpriteRenderer _sprite;
@@ -48,7 +51,7 @@ public class SquidController : MonoBehaviour, IDamageable
         WaterLevel = 1f;
         Rb = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();
-        _underwater = new SquidSwimState(this, inWaterParams);
+        _underwater = new SquidSwimState(this, inWaterParams, swimSounds);
         var air = new SquidAirState(this, inAirParams);
         var leavingWater = new SquidLeavingWaterState(this, leavingWaterParams, inWaterParams);
         _squirt = new SquidSquirtState(this, inWaterSquirtStrength);
@@ -116,7 +119,6 @@ public class SquidController : MonoBehaviour, IDamageable
         yield return Helper.GetWait(waterTimer);
         _waterTimerRunning = false;
     }
-
 
     private void Update()
     {
@@ -202,15 +204,18 @@ public class SquidController : MonoBehaviour, IDamageable
         var waterSplash = Instantiate(waterSplashPrefab, _water[0].ClosestPoint(transform.position + Vector3.up * 5f), Quaternion.identity);
         waterSplash.transform.localScale = Vector3.one * Rb.velocity.magnitude * 0.01f;
         Destroy(waterSplash, 0.1f);
+        AudioManager.Instance.PlaySound(waterInSound);
     }
 
     private void ExitedWater()
     {
+        if (_isUnderwater) return;
         _waterRegenActive = false;
         _waterDegenActive = true;
         var waterSplash = Instantiate(waterSplashPrefab, _water[0].ClosestPoint(transform.position + Vector3.up * 5f), Quaternion.identity);
         waterSplash.transform.localScale = Vector3.one * Rb.velocity.magnitude * 0.01f;
         Destroy(waterSplash, 0.1f);
+        AudioManager.Instance.PlaySound(waterOutSound); 
     }
     
     private void DecreaseWaterLevel()
