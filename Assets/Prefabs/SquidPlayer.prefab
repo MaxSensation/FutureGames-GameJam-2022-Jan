@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5301837957049216660}
   - component: {fileID: 1073129156038844406}
   - component: {fileID: 6248108224972096029}
+  - component: {fileID: 5280554989549098501}
   m_Layer: 0
   m_Name: SquidPlayer
   m_TagString: Player
@@ -56,7 +57,7 @@ MonoBehaviour:
   incPrefab: {fileID: 9102520542802823879, guid: 88e530b357db6fe469b10d68add873ae, type: 3}
   incTimer: 1
   inWaterSquirtStrength: 40
-  otherStatesWaterStrength: 30
+  otherStatesWaterStrength: 40
   maxVelocity: 60
   inAirParams:
     speed: 10
@@ -204,6 +205,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5280554989549098501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5301837957049216654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c964c2235f758847964f686bd9e7012, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7103403472666602207
 GameObject:
   m_ObjectHideFlags: 0

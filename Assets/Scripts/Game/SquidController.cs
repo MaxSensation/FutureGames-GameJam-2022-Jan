@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class SquidController : MonoBehaviour, IDamageable
 {
+    public static Action OnDiedEvent;
     [SerializeField] private bool debugMode;
     [SerializeField] private GameObject waterSplashPrefab;
     [SerializeField] private Animator waterDash;
@@ -25,6 +26,7 @@ public class SquidController : MonoBehaviour, IDamageable
     public Animator Animator { get; private set; }
     private SpriteRenderer _sprite;
     private SquidDeathState _deathState;
+    private SquidSwimState _underwater;
     private SquidSquirtState _squirt;
     private readonly StateMachine _stateMachine = new ();
     private int _currentInks = 3;
@@ -40,7 +42,7 @@ public class SquidController : MonoBehaviour, IDamageable
         WaterLevel = 1f;
         Rb = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();
-        var underwater = new SquidSwimState(this, inWaterParams);
+        _underwater = new SquidSwimState(this, inWaterParams);
         var air = new SquidAirState(this, inAirParams);
         var leavingWater = new SquidLeavingWaterState(this, leavingWaterParams, inWaterParams);
         _squirt = new SquidSquirtState(this, inWaterSquirtStrength);
@@ -50,21 +52,29 @@ public class SquidController : MonoBehaviour, IDamageable
         _stateMachine.AddTransition(ground, _deathState, () => _isGrounded && WaterLevel <= 0f);
         _stateMachine.AddAnyTransition(_squirt, CanWaterSquirt);
         _stateMachine.AddTransition(_squirt, air, () => !_isGrounded && !_isUnderwater);
-        _stateMachine.AddTransition(_squirt, underwater, () => !_isGrounded && _isUnderwater);
+        _stateMachine.AddTransition(_squirt, _underwater, () => !_isGrounded && _isUnderwater);
         _stateMachine.AddTransition(_squirt, ground, () => _isGrounded && !_isUnderwater);
         _stateMachine.AddTransition(ground, air, () => !_isGrounded && !_isUnderwater);
         _stateMachine.AddTransition(air, ground, () => _isGrounded && !_isUnderwater);
-        _stateMachine.AddTransition(underwater, leavingWater, () => !_isUnderwater && !_isGrounded);
+        _stateMachine.AddTransition(_underwater, leavingWater, () => !_isUnderwater && !_isGrounded);
         _stateMachine.AddTransition(leavingWater, air, () => true);
-        _stateMachine.AddTransition(air, underwater, () => _isUnderwater);
-        _stateMachine.SetState(underwater);
+        _stateMachine.AddTransition(air, _underwater, () => _isUnderwater);
+        _stateMachine.SetState(_underwater);
         _squirt.OnEnteredState += DecreaseWaterLevel;
         GameManager.Instance.Inputs.Player.Primary.performed += _ => FireInk();
-        underwater.OnEnteredState += EnteredWater;
-        underwater.OnExitState += ExitedWater;
+        _underwater.OnEnteredState += EnteredWater;
+        _underwater.OnExitState += ExitedWater;
         Rb.gravityScale = 4f;
         GameManager.Instance.OnInksChanged?.Invoke(_currentInks);
+        OnDiedEvent += Reset;
         if (debugMode) GameManager.Instance.Inputs.Player.Enable();
+    }
+
+    private void Reset()
+    {
+        Rb.velocity = Vector2.zero;
+        transform.rotation = Quaternion.Euler(0,0,0);
+        _stateMachine.SetState(_underwater);
     }
 
     private void FireInk()
