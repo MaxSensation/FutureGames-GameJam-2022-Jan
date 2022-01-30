@@ -1,14 +1,15 @@
-﻿using MaxHelpers;
+﻿using System;
 using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour, IDamageable
 {
+    public static Action<Transform> OnEnemySpawnedEvent, OnEnemyDespawnEvent;
     [SerializeField] private float killAnimationSpeed;
     private bool _dead;
 
     private void OnEnable()
     {
-        GameManager.Instance.RegisterEnemy(transform);
+        OnEnemySpawnedEvent?.Invoke(transform);
     }
 
     private void OnCollisionEnter2D(Collision2D col)
@@ -25,6 +26,6 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     private void OnDestroy()
     {
-        GameManager.Instance.DeregisterEnemy(transform);
+        OnEnemyDespawnEvent?.Invoke(transform);
     }
 }

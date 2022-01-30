@@ -1,10 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/Styles/Default.uss?fileID=7433441132597879392&amp;guid=edb0e8c7dd989544bb1d58aefaf1d153&amp;type=3#Default" />
     <ui:VisualElement name="MainPanel" style="align-items: center; justify-content: center; flex-grow: 1;">
-        <ui:VisualElement class="DefaultVisualElement" style="height: 50%; width: 30%; justify-content: center; min-width: 250px; min-height: 250px; align-items: center;">
-            <ui:Label text="In Game Menu" display-tooltip-when-elided="true" class="DefaultLable" style="font-size: 30%; -unity-font-style: normal; width: auto; height: auto; -unity-text-align: upper-center; white-space: nowrap;" />
+        <ui:VisualElement class="DefaultVisualElement" style="height: 50%; width: 30%; justify-content: center; min-width: 250px; min-height: 250px; align-items: center; background-color: rgba(255, 255, 255, 0.32); border-left-width: 3px; border-right-width: 3px; border-top-width: 3px; border-bottom-width: 3px; border-left-color: rgba(255, 218, 218, 0.33); border-right-color: rgba(255, 218, 218, 0.33); border-top-color: rgba(255, 218, 218, 0.33); border-bottom-color: rgba(255, 218, 218, 0.33);">
+            <ui:Label text="PAUSED" display-tooltip-when-elided="true" class="DefaultLable" style="font-size: 30%; -unity-font-style: normal; width: auto; height: auto; -unity-text-align: upper-center; white-space: nowrap; margin-top: 16px; -unity-font: url(&apos;project://database/Assets/Fonts/Odin%20Rounded%20-%20Bold.otf?fileID=12800000&amp;guid=d72fed9818167364cb47854cd9c70534&amp;type=3#Odin Rounded - Bold&apos;);" />
             <ui:VisualElement style="width: 100%; height: 100%; justify-content: center; align-items: center;">
-                <ui:Button text="Resume Game" display-tooltip-when-elided="true" name="Resume" class="DefaultButton" />
+                <ui:Button text="Resume" display-tooltip-when-elided="true" name="Resume" class="DefaultButton" />
                 <ui:Button text="Options" display-tooltip-when-elided="true" name="Options" class="DefaultButton" />
                 <ui:Button text="Quit" display-tooltip-when-elided="true" name="Quit" class="DefaultButton" />
             </ui:VisualElement>

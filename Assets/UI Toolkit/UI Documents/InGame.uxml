@@ -2,13 +2,13 @@
     <Style src="project://database/Assets/UI%20Toolkit/Styles/Default.uss?fileID=7433441132597879392&amp;guid=edb0e8c7dd989544bb1d58aefaf1d153&amp;type=3#Default" />
     <ui:VisualElement name="MainPanel" style="overflow: hidden; flex-grow: 1; align-items: flex-end; justify-content: flex-start; flex-direction: column;">
         <ui:VisualElement style="flex-direction: column; justify-content: flex-start; align-items: center; width: 20%; height: 20%;">
-            <ui:VisualElement style="width: 100%; flex-direction: row; justify-content: center; height: 50%;">
-                <ui:VisualElement name="InkOne" style="height: 100%; width: 100%; visibility: visible; display: flex; background-image: url(&apos;project://database/Assets/Sprites/Other/Ink/ink.png?fileID=2800000&amp;guid=2a6c45787eab9d041b1f257d12e3d2be&amp;type=3#ink&apos;);" />
-                <ui:VisualElement name="InkTwo" style="height: 100%; width: 100%; background-image: url(&apos;project://database/Assets/Sprites/Other/Ink/ink.png?fileID=2800000&amp;guid=2a6c45787eab9d041b1f257d12e3d2be&amp;type=3#ink&apos;); visibility: visible;" />
-                <ui:VisualElement name="InkThree" style="height: 100%; width: 100%; visibility: visible; background-image: url(&apos;project://database/Assets/Sprites/Other/Ink/ink.png?fileID=2800000&amp;guid=2a6c45787eab9d041b1f257d12e3d2be&amp;type=3#ink&apos;);" />
+            <ui:VisualElement style="width: 100%; flex-direction: row; justify-content: center; height: 50%; margin-top: 8px;">
+                <ui:VisualElement name="InkOne" style="height: 100%; width: 100%; visibility: visible; display: flex; background-image: url(&apos;project://database/Assets/Sprites/Other/Ink/ink.png?fileID=2800000&amp;guid=2a6c45787eab9d041b1f257d12e3d2be&amp;type=3#ink&apos;); -unity-background-image-tint-color: rgba(0, 0, 0, 0.82);" />
+                <ui:VisualElement name="InkTwo" style="height: 100%; width: 100%; background-image: url(&apos;project://database/Assets/Sprites/Other/Ink/ink.png?fileID=2800000&amp;guid=2a6c45787eab9d041b1f257d12e3d2be&amp;type=3#ink&apos;); visibility: visible; -unity-background-image-tint-color: rgba(0, 0, 0, 0.82);" />
+                <ui:VisualElement name="InkThree" style="height: 100%; width: 100%; visibility: visible; background-image: url(&apos;project://database/Assets/Sprites/Other/Ink/ink.png?fileID=2800000&amp;guid=2a6c45787eab9d041b1f257d12e3d2be&amp;type=3#ink&apos;); -unity-background-image-tint-color: rgba(0, 0, 0, 0.82);" />
             </ui:VisualElement>
-            <ui:VisualElement style="width: 100%; height: auto;">
-                <ui:ProgressBar title="Water Level" name="WaterLevel" high-value="1" />
+            <ui:VisualElement style="width: 100%; height: auto; opacity: 1; display: flex;">
+                <ui:ProgressBar title=" " name="WaterLevel" high-value="1" focusable="false" style="background-color: rgb(31, 31, 31); margin-right: 8px;" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

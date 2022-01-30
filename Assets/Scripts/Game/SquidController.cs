@@ -311,7 +311,6 @@ public class SquidController : MonoBehaviour, IDamageable
     {
         public float optimalAngle;
         public float force;
-        public float maxVelocityForce;
         public float horizontalBoost;
         public float fullyVerticalBoost;
         public float minimumAngleFromTop;
