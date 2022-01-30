@@ -99,7 +99,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9b6c91f5656bc9b438597d99607fcce9, type: 3}
   - {fileID: 8300000, guid: 9519f3343a7e97743a8b49b41145eccd, type: 3}
   - {fileID: 8300000, guid: 3e7666740f4168c4892c2d1d01937a01, type: 3}
-  emptyWaterSound: {fileID: 8300000, guid: bb3947e44d1186f438b2b2954d397a0b, type: 3}
+  waterEmptySound: {fileID: 8300000, guid: bb3947e44d1186f438b2b2954d397a0b, type: 3}
+  deathSound: {fileID: 8300000, guid: 4e5d675bb2467654898eb4afadef8afd, type: 3}
+  grounSounds:
+  - {fileID: 8300000, guid: c66484c9785859243b9799693494a9eb, type: 3}
+  - {fileID: 8300000, guid: 6a7bbc6f471f6e44bb9539e00d8450ec, type: 3}
+  - {fileID: 8300000, guid: bbf604b9ab6f77b4fbf331629bafc80a, type: 3}
   waterRegenAmount: 0.8
   waterDegenAmount: 0.2
   squirtWaterUseAmount: 0.25
