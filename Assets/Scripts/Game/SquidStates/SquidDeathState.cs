@@ -12,7 +12,7 @@ namespace SquidStates
 
         public void OnEnter()
         {
-            _squidController.gameObject.SetActive(false);
+            SquidController.OnDiedEvent?.Invoke();
         }
     }
 }
