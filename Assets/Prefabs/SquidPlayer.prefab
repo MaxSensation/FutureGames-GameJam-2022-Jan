@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e2cf55acff19194aafe8b687e96183f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugMode: 1
+  debugMode: 0
   waterSplashPrefab: {fileID: 7014956110631451203, guid: 3565f61579a9de041ac7184621137074, type: 3}
   waterDash: {fileID: 5638748041636108082}
   waterTimer: 0.5
@@ -76,7 +76,7 @@ MonoBehaviour:
     fullyVerticalBoost: 20
     minimumAngleFromTop: 0.84
     minimumBoost: 20
-  changeColorWithWaterLevel: 0
+  changeColorWithWaterLevel: 1
   fullHealthyWaterColor:
     serializedVersion: 2
     rgba: 4294967295

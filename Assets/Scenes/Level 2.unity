@@ -8858,6 +8858,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5301837957049216649, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
+      propertyPath: debugMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5301837957049216654, guid: 4cc06b2e2034f8b4aa07fcd20b7a53dd, type: 3}
       propertyPath: m_Name
       value: SquidPlayer
@@ -10146,11 +10150,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6790142105062867648, guid: 2d983ea0f5eaae648bc68a9fb4c536fa, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.13
+      value: 4.836
       objectReference: {fileID: 0}
     - target: {fileID: 6790142105062867648, guid: 2d983ea0f5eaae648bc68a9fb4c536fa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.82
+      value: 9.53
       objectReference: {fileID: 0}
     - target: {fileID: 6790142105062867648, guid: 2d983ea0f5eaae648bc68a9fb4c536fa, type: 3}
       propertyPath: m_LocalPosition.z
