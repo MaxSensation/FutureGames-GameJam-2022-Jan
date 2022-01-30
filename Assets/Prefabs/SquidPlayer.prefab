@@ -93,7 +93,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   groundCheckRadius: 0.15
-  groundOffsetDistance: 0.5
+  groundOffsetDistance: 0.68
   waterCheckRadius: 0.2
 --- !u!50 &5301837957049216651
 Rigidbody2D:
