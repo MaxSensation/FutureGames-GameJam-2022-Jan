@@ -73,6 +73,7 @@ public class SquidController : MonoBehaviour, IDamageable
         _stateMachine.AddTransition(_squirt, _underwater, () => !_isGrounded && _isUnderwater);
         _stateMachine.AddTransition(_squirt, ground, () => _isGrounded && !_isUnderwater);
         _stateMachine.AddTransition(ground, air, () => !_isGrounded && !_isUnderwater);
+        _stateMachine.AddTransition(ground, _underwater, () => !_isGrounded && _isUnderwater);
         _stateMachine.AddTransition(air, ground, () => _isGrounded && !_isUnderwater);
         _stateMachine.AddTransition(_underwater, leavingWater, () => !_isUnderwater && !_isGrounded);
         _stateMachine.AddTransition(leavingWater, air, () => true);
